@@ -6,7 +6,7 @@ import ReactDOM from "react-dom/client";
 import TheHeader from "./components/theHeader";
 import Login from "./components/account/login";
 import apiEndpoints from "./api.endpoints";
-import Hello from "./Hello";
+import Hello from "./hello";
 
 interface Props {}
 interface State {}
@@ -43,6 +43,7 @@ class AppContainer extends Component<Props, State> {
       <>
         <TheHeader />
         <Login />
+        <Hello />
       </>
       // </StrictMode>
     );
