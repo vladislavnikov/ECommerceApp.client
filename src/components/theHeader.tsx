@@ -1,4 +1,4 @@
-import imgLogo from "images/logo.png"; // start-path is 'images/' because we have an alias 'images' in webpack.common.js
+import imgLogo from "images/logo.png";
 import * as styles from "./theHeader.m.scss";
 
 export default function TheHeader() {
