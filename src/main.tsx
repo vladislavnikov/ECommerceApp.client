@@ -7,6 +7,7 @@ import TheHeader from "./components/theHeader";
 import Login from "./components/account/login";
 import apiEndpoints from "./api.endpoints";
 import Hello from "./hello";
+import App from "./app";
 
 interface Props {}
 interface State {}
@@ -44,6 +45,7 @@ class AppContainer extends Component<Props, State> {
         <TheHeader />
         <Login />
         <Hello />
+        <App />
       </>
       // </StrictMode>
     );
