@@ -1,0 +1,25 @@
+.footer {
+  text-align: center;
+  background-color: #333;
+  color: white;
+  padding: 1rem;
+
+  .icons {
+    margin-top: 1rem;
+
+    a {
+      margin: 0 0.5rem;
+
+      img {
+        width: 40px;
+        height: 40px;
+        transition: transform 0.3s;
+      }
+
+      img:hover,
+      img:focus {
+        transform: scale(1.1);
+      }
+    }
+  }
+}
