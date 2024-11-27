@@ -49,6 +49,13 @@ export default eslintTs.config(
     processor: "json/json",
     rules: {
       "json/*": ["error", { allowComments: true }],
+      "react/function-component-definition": [
+        "error",
+        {
+          namedComponents: "arrow-function",
+          unnamedComponents: "arrow-function",
+        },
+      ],
     },
   },
   {

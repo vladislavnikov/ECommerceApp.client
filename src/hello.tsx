@@ -1,2 +1,5 @@
-const Hello = () => <h1>Hello, React + TypeScript!</h1>;
+function Hello() {
+  return <div>Hello</div>;
+}
+
 export default Hello;
