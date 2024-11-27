@@ -7,6 +7,11 @@ declare module "*.scss" {
   export = content;
 }
 
+declare module "*.module.scss" {
+  const classes: { [key: string]: string };
+  export default classes;
+}
+
 declare module "*.css" {
   const content: IClassNames;
   export default content;
