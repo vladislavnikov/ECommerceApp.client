@@ -6,7 +6,7 @@ import * as styles from "./header.module.scss";
 function Header(): React.ReactElement {
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>Games Market</h1>
+      <h1 className={styles.title}>Games Store</h1>
       <nav className={styles.nav}>
         <NavLink to={ROUTES.HOME} className={({ isActive }) => (isActive ? styles.active : "")}>
           Home
@@ -16,6 +16,12 @@ function Header(): React.ReactElement {
         </NavLink>
         <NavLink to={ROUTES.ABOUT} className={({ isActive }) => (isActive ? styles.active : "")}>
           About
+        </NavLink>
+        <NavLink to={ROUTES.NOT_FOUND} className={({ isActive }) => (isActive ? styles.active : "")}>
+          Sign In
+        </NavLink>
+        <NavLink to={ROUTES.NOT_FOUND} className={({ isActive }) => (isActive ? styles.active : "")}>
+          Sign Up
         </NavLink>
       </nav>
     </header>

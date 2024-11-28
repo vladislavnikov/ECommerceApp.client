@@ -1,34 +1,60 @@
 .header {
+  background-color: #000;
+  color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #333;
-  color: white;
-  padding: 1rem 2rem;
+  padding: 0px 30px;
+  position: sticky;
+  top: 0;
 }
 
 .title {
-  font-size: 1.5rem;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #fff;
 }
 
 .nav {
   display: flex;
-  gap: 1rem;
+  gap: 0px;
 }
 
 .nav a {
-  color: white;
+  color: #fff;
   text-decoration: none;
-  padding: 0.5rem 1rem;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  font-size: 16px;
+  position: relative;
+  padding: 5px 5px;
+  transition: color 0.3s ease;
 }
 
-.nav a:hover,
-.nav a:focus {
-  background-color: #555;
+.nav a:hover {
+  background-color: #272727;
+}
+
+.nav a::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #272626;
+}
+
+.nav a:hover::after {
+  width: 100%;
 }
 
 .active {
-  background-color: #007bff;
+  color: #9c27b0;
+  background-color: #272727;
+  border-bottom: 2px solid #892fb0;
+}
+
+.active::after {
+  background-color: #272727;
+  width: 100%;
 }
