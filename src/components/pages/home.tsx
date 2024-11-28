@@ -1,5 +1,8 @@
+import React from "react";
+import "./home.scss";
+
 function Home(): React.ReactElement {
-  return <h2>Welcome to the Games Market!</h2>;
+  return <div className="home" />;
 }
 
 export default Home;

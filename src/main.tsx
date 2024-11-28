@@ -38,10 +38,7 @@ class AppContainer extends Component<Props, State> {
   render() {
     return (
       // <StrictMode>
-      <>
-        {/* <Hello /> */}
-        <App />
-      </>
+      <App />
       // </StrictMode>
     );
   }

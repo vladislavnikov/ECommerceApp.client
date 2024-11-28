@@ -1,17 +1,25 @@
 import React from "react";
 import * as styles from "./footer.module.scss";
 
+import rockstar from "../../assets/footer/rockstarGamesLogo.svg";
+import epic from "../../assets/footer/epicGamesLogo.svg";
+import riot from "../../assets/footer/riotGames.svg";
+
 function Footer(): React.ReactElement {
   return (
     <footer className={styles.footer}>
-      <p>Incredible convenient</p>
-      <div className={styles.icons}>
-        <a href="https://www.company1.com" target="_blank" rel="noopener noreferrer">
-          <img alt="Company 1" />
-        </a>
-        <a href="https://www.company2.com" target="_blank" rel="noopener noreferrer">
-          <img alt="Company 2" />
-        </a>
+      <div className={styles["footer-left"]}>
+        <p>firstName.lastName@ventionteams.com</p>
+        <p>Students Labs Vention 2023</p>
+        <div className={styles.underline} />
+      </div>
+      <div className={styles["footer-right"]}>
+        <div className={styles.logos}>
+          <img src={rockstar} alt="Rockstar Logo" className={styles["footer-logo"]} />
+          <img src={epic} alt="Epic Games Logo" className={styles["footer-logo"]} />
+          <img src={riot} alt="Riot Games Logo" className={styles["footer-logo"]} />
+        </div>
+        <div className={styles.underline} />
       </div>
     </footer>
   );
