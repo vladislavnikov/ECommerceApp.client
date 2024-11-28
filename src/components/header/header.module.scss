@@ -1,11 +1,14 @@
 .header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
   background-color: #000;
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0px 10px;
-  top: 0;
 }
 
 .title {

@@ -1,8 +1,7 @@
 import React from "react";
-import "./home.scss";
 
 function Home(): React.ReactElement {
-  return <div className="home" />;
+  return <h2>Home</h2>;
 }
 
 export default Home;
