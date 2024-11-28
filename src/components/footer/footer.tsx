@@ -6,6 +6,7 @@ import epic from "../../assets/footer/epicGamesLogo.svg";
 import riot from "../../assets/footer/riotGames.svg";
 
 function Footer(): React.ReactElement {
+  const n = 5;
   return (
     <footer className={styles.footer}>
       <div className={styles.footerLeft}>
