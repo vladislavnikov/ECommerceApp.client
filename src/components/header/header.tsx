@@ -1,9 +1,8 @@
-import React from "react";
 import { NavLink } from "react-router-dom";
 import ROUTES from "../../constants/routes";
 import * as styles from "./header.module.scss";
 
-function Header(): React.ReactElement {
+function Header() {
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>Games Store</h1>

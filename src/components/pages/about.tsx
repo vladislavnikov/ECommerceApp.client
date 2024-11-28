@@ -1,4 +1,4 @@
-function About(): React.ReactElement {
+function About() {
   return <h2>Learn more About Us!</h2>;
 }
 

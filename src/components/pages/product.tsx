@@ -1,4 +1,4 @@
-function Product(): React.ReactElement {
+function Product() {
   return <h2>Page not found. Redirecting to Home...</h2>;
 }
 

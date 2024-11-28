@@ -1,63 +1,60 @@
 .header {
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   background-color: #000;
   color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0px 10px;
-}
+  padding: 0 10px;
+  box-sizing: border-box;
 
-.title {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 0;
-  color: #fff;
-}
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin: 0;
+    color: #fff;
+  }
 
-.nav {
-  display: flex;
-  gap: 0px;
-}
+  .nav {
+    display: flex;
 
-.nav a {
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  position: relative;
-  padding: 10px 10px;
-  transition: color 0.3s ease;
-}
+    a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 16px;
+      position: relative;
+      padding: 10px;
+      transition: color 0.3s ease;
+      display: inline-block;
 
-.nav a:hover {
-  background-color: #272727;
-}
+      &:hover {
+        background-color: #272727;
+      }
 
-.nav a::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background-color: #272626;
-}
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: #272626;
+        transition: width 0.3s ease;
+      }
 
-.nav a:hover::after {
-  width: 100%;
-}
+      &:hover::after {
+        width: 100%;
+      }
+    }
 
-.active {
-  color: #9c27b0;
-  font-weight: bold;
-  background-color: #272727;
-  border-bottom: 2px solid #892fb0;
-}
-
-.active::after {
-  background-color: #272727;
-  width: 100%;
+    .active {
+      color: white;
+      font-weight: bold;
+      background-color: #272727;
+      border-bottom: 2px solid #892fb0;
+    }
+  }
 }

@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
+/* eslint-disable global-require */
 
 module.exports = {
   // browser target config see in .browserslistrc

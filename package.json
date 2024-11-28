@@ -16,7 +16,7 @@
     "lint-es": "eslint --fix --cache ./**/*.{mjs,js,jsx,ts,tsx,json} && prettier --write **/*.{mjs,js,jsx,ts,tsx,json,html} --log-level warn",
     "lint-styles": "stylelint --fix --cache ./**/*.{css,scss,less} && prettier --write **/*.{css,scss,less} --log-level warn",
     "lint-md": "markdownlint --fix **/*.md --ignore node_modules",
-    "prepare": "husky",
+    "prepare": "husky && husky install",
     "prepareLegacy": "husky init && shx rm -rf .git/hooks && shx ln -s ../.husky .git/hooks && git config --unset core.hooksPath"
   },
   "engines": {
@@ -56,7 +56,7 @@
     "css-minimizer-webpack-plugin": "^7.0.0",
     "css-unicode-loader": "^1.0.3",
     "html-webpack-plugin": "^5.6.0",
-    "husky": "^9.1.7",
+    "husky": "^8.0.0",
     "mini-css-class-name": "^0.15.1",
     "mini-css-extract-plugin": "^2.9.1",
     "mini-svg-data-uri": "^1.4.4",
