@@ -1,9 +1,8 @@
 import React from "react";
+import rockstar from "src/assets/footer/rockstarGamesLogo.svg";
+import epic from "src/assets/footer/epicGamesLogo.svg";
+import riot from "src/assets/footer/riotGames.svg";
 import * as styles from "./footer.module.scss";
-
-import rockstar from "../../assets/footer/rockstarGamesLogo.svg";
-import epic from "../../assets/footer/epicGamesLogo.svg";
-import riot from "../../assets/footer/riotGames.svg";
 
 function Footer(): React.ReactElement {
   return (
