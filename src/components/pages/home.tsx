@@ -1,5 +1,11 @@
+import SearchBar from "src/elements/searchBr";
+
 function Home() {
-  return <h2>Home</h2>;
+  return (
+    <div>
+      <SearchBar />
+    </div>
+  );
 }
 
 export default Home;
