@@ -83,5 +83,17 @@
         display: block;
       }
     }
+
+    .arrow {
+      font-size: 16px;
+      margin-left: 5px;
+      transition: transform 0.3s ease-in-out;
+      display: inline-block;
+      transform: rotate(0deg);
+    }
+
+    .open {
+      transform: rotate(180deg);
+    }
   }
 }

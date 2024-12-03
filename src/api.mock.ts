@@ -47,5 +47,11 @@ const mockTopGames = [
 export default webpackMockServer.add((app) => {
   app.get(apiEndpoints.testMock, (_req, res) => res.json(mockData));
 
-  app.get("/api/products/top", (_req, res) => res.json(mockTopGames));
+  app.get(apiEndpoints.gamesMock, (_req, res) => res.json(mockTopGames));
+
+  app.get(apiEndpoints.searchMock, (req, res) => {
+    const searchText = typeof req.query.text === "string" ? req.query.text : "";
+    const results = mockTopGames.filter((game) => game.title.toLowerCase().includes(searchText.toLowerCase()));
+    res.json(results);
+  });
 });

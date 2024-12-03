@@ -13,9 +13,11 @@ function Header() {
         <NavLink to={ROUTES.HOME} className={({ isActive }) => (isActive ? styles.active : "")}>
           Home
         </NavLink>
+
         <div className={styles.dropdown} onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
           <NavLink to={ROUTES.PRODUCTS} className={({ isActive }) => `${styles.dropbtn} ${isActive ? styles.active : ""}`}>
             Products
+            <span className={`${styles.arrow} ${isDropdownOpen ? styles.open : ""}`}>&#9660;</span>
           </NavLink>
           {isDropdownOpen && (
             <div className={styles.dropdownContent}>
@@ -31,6 +33,7 @@ function Header() {
             </div>
           )}
         </div>
+
         <NavLink to={ROUTES.ABOUT} className={({ isActive }) => (isActive ? styles.active : "")}>
           About
         </NavLink>

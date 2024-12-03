@@ -1,27 +1,125 @@
 .searchBar {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
 
-  .searchInput {
-    width: 100%;
-    max-width: 500px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border: 3px solid white;
-    border-radius: 15px;
-    outline: none;
-    background-color: black;
-    opacity: 0.3;
-    color: #fff;
+  .inputContainer {
+    position: relative;
 
-    &::placeholder {
+    .searchInput {
+      width: 100%;
+      max-width: 500px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: 3px solid white;
+      border-radius: 15px;
+      outline: none;
+      background-color: black;
+      opacity: 0.3;
       color: #fff;
     }
 
-    &:focus {
-      border-color: gray;
+    .searchInput:focus {
+      border-color: #892fb0;
     }
+
+    .iconContainer {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .spinner {
+      position: absolute;
+      right: 60px;
+      top: -10px;
+      transform: translateY(-50%);
+      border: 2px solid #f3f3f3;
+      border-top: 2px solid #892fb0;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+  }
+
+  .resultsDropdown {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    background: #686464;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    width: 100%;
+    max-width: 500px;
+    top: 100%;
+    z-index: 10;
+
+    .resultItem {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #8f8a8a;
+      }
+
+      .resultImage {
+        width: 30px;
+        height: 30px;
+        object-fit: cover;
+        margin-right: 10px;
+      }
+
+      .resultText {
+        font-size: 14px;
+        color: #333;
+      }
+
+      .resultButton {
+        background: none;
+        border: none;
+        width: 100%;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        cursor: pointer;
+        text-align: left;
+        color: inherit;
+        font-size: inherit;
+
+        &:hover {
+          background-color: #8f8a8a;
+        }
+
+        .resultImage {
+          width: 30px;
+          height: 30px;
+          object-fit: cover;
+          margin-right: 10px;
+        }
+
+        .resultText {
+          font-size: 14px;
+          color: #333;
+        }
+      }
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }
