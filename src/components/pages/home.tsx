@@ -1,4 +1,5 @@
 import Categories from "@/elements/categories";
+import NewGames from "@/elements/newGames";
 import SearchBar from "@/elements/searchBar";
 
 function Home() {
@@ -6,6 +7,7 @@ function Home() {
     <div>
       <SearchBar />
       <Categories />
+      <NewGames />
     </div>
   );
 }
