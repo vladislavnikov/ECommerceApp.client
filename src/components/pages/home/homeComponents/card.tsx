@@ -1,26 +1,8 @@
-import pc from "src/assets/platforms/pc.png";
-import ps5 from "src/assets/platforms/ps.png";
-import xbox from "src/assets/platforms/xbox.png";
-import * as styles from "./card.m.scss";
+import platformIcons from "src/constants/platforms";
+import { GameCardProps } from "src/shared/models/game.t";
+import * as styles from "./card.m.scss"; // Import styles
 
-interface GameCardProps {
-  title: string;
-  price: string;
-  rating: number;
-  ageRating: number;
-  cover: string;
-  platforms: string[];
-  releaseDate: string;
-  description: string;
-}
-
-const platformIcons: { [key: string]: string } = {
-  pc,
-  ps5,
-  xbox,
-};
-
-function GameCard({ title, price, rating, ageRating, cover, platforms, releaseDate, description }: GameCardProps) {
+function GameCard({ title, price, rating, ageRating, cover, platforms, description }: GameCardProps) {
   return (
     <div className={styles.flipCard}>
       <div className={styles.flipCardInner}>
@@ -29,7 +11,7 @@ function GameCard({ title, price, rating, ageRating, cover, platforms, releaseDa
             {platforms.map((platform) => {
               const platformIcon = platformIcons[platform.toLowerCase()];
               return platformIcon ? (
-                <img key={releaseDate} src={platformIcon} alt={platform} className={styles.platformIcon} />
+                <img key={platform} src={platformIcon} alt={platform} className={styles.platformIcon} />
               ) : (
                 <span key={platform} className={styles.platformIcon}>
                   {platform.toUpperCase()}

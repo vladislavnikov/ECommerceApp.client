@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import PCIcon from "src/assets/categories/computer.svg";
 import PlaystationIcon from "src/assets/categories/playstation.svg";
 import XboxIcon from "src/assets/categories/xbox.svg";
+import { ROUTES } from "src/constants/routes";
 import * as styles from "./categories.m.scss";
 
 function Categories() {
@@ -9,23 +10,23 @@ function Categories() {
     <div className={styles.categories}>
       <h2>Categories</h2>
       <div className={styles.cardContainer}>
-        <Link to="/products/category/pc" className={styles.card}>
+        <Link to={ROUTES.CATEGORIES.PC} className={styles.card}>
           <div className={styles.icon}>
-            <img src={PCIcon} alt="PC" style={{ width: "50px", height: "50px", filter: "invert(0.5)" }} />
+            <img src={PCIcon} alt="PC" className={styles.iconImage} />
           </div>
           <p>PC</p>
         </Link>
 
-        <Link to="/products/category/playstation" className={styles.card}>
+        <Link to={ROUTES.CATEGORIES.PLAYSTATION} className={styles.card}>
           <div className={styles.icon}>
-            <img src={PlaystationIcon} alt="Playstation 5" style={{ width: "50px", height: "50px", filter: "invert(0.5)" }} />
+            <img src={PlaystationIcon} alt="Playstation 5" className={styles.iconImage} />
           </div>
           <p>Playstation 5</p>
         </Link>
 
-        <Link to="/products/category/xbox" className={styles.card}>
+        <Link to={ROUTES.CATEGORIES.XBOX} className={styles.card}>
           <div className={styles.icon}>
-            <img src={XboxIcon} alt="Xbox One" style={{ width: "50px", height: "50px", filter: "invert(0.5)" }} />
+            <img src={XboxIcon} alt="Xbox One" className={styles.iconImage} />
           </div>
           <p>Xbox One</p>
         </Link>

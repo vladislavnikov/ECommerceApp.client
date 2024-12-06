@@ -1,7 +1,7 @@
 import "./styles/main.scss";
 import ReactDOM from "react-dom/client";
 import { Component } from "react";
-import ErrorBoundary from "src/components/errorBoundary";
+import ErrorBoundary from "src/elements/errorBoundary";
 import apiEndpoints from "./api.endpoints";
 import App from "./app";
 
