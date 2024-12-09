@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
-import ROUTES from "src/constants/routes";
-import * as styles from "./header.module.scss";
+import Dropdown from "src/components/header/dropdown";
+import { ROUTES, PRODUCT_ROUTES } from "src/constants/routes";
+import * as styles from "src/components/header/header.module.scss";
 
 function Header() {
   return (
@@ -10,9 +11,9 @@ function Header() {
         <NavLink to={ROUTES.HOME} className={({ isActive }) => (isActive ? styles.active : "")}>
           Home
         </NavLink>
-        <NavLink to={ROUTES.PRODUCTS} className={({ isActive }) => (isActive ? styles.active : "")}>
-          Products
-        </NavLink>
+
+        <Dropdown label="Products" routes={PRODUCT_ROUTES} />
+
         <NavLink to={ROUTES.ABOUT} className={({ isActive }) => (isActive ? styles.active : "")}>
           About
         </NavLink>

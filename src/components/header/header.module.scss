@@ -10,6 +10,7 @@
   align-items: center;
   padding: 0 10px;
   box-sizing: border-box;
+  z-index: 1;
 
   .title {
     font-size: 24px;
@@ -25,36 +26,28 @@
       color: #fff;
       text-decoration: none;
       font-size: 16px;
-      position: relative;
       padding: 10px;
-      transition: color 0.3s ease;
-      display: inline-block;
+      position: relative;
+      text-align: center;
 
       &:hover {
         background-color: #272727;
       }
+    }
+
+    .active {
+      font-weight: bold;
+      background-color: #272727;
 
       &::after {
         content: "";
         position: absolute;
         bottom: 0;
         left: 0;
-        width: 0;
-        height: 2px;
-        background-color: #272626;
-        transition: width 0.3s ease;
-      }
-
-      &:hover::after {
         width: 100%;
+        height: 2px;
+        background-color: #892fb0;
       }
-    }
-
-    .active {
-      color: white;
-      font-weight: bold;
-      background-color: #272727;
-      border-bottom: 2px solid #892fb0;
     }
   }
 }
