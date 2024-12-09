@@ -1,6 +1,6 @@
 import platformIcons from "src/constants/platforms";
 import { Game } from "src/shared/models/game";
-import * as styles from "./card.m.scss";
+import * as styles from "src/components/pages/home/card/card.m.scss";
 
 interface GameCardProps extends Game {}
 

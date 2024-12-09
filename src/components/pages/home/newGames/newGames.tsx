@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Game } from "src/shared/models/game";
-import GameCard from "src/components/pages/home/homeComponents/card";
-import * as styles from "src/components/pages/home/homeComponents/newGames.m.scss";
+import GameCard from "@/components/pages/home/card/card";
+import * as styles from "src/components/pages/home/newGames/newGames.m.scss";
 import { fetchTopGames } from "src/api/services/gameService";
 
 function NewGames() {

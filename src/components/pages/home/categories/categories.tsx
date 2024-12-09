@@ -3,7 +3,7 @@ import PCIcon from "src/assets/categories/computer.svg";
 import PlaystationIcon from "src/assets/categories/playstation.svg";
 import XboxIcon from "src/assets/categories/xbox.svg";
 import { ROUTES } from "src/constants/routes";
-import * as styles from "./categories.m.scss";
+import * as styles from "src/components/pages/home/categories/categories.m.scss";
 
 function Categories() {
   return (

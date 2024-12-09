@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { debounce } from "lodash";
 import { Game } from "src/shared/models/game";
 import { searchGames } from "src/api/services/gameService";
-import * as styles from "./searchBar.m.scss";
+import * as styles from "src/components/pages/home/searchBar/searchBar.m.scss";
 
 function SearchBar() {
   const [searchText, setSearchText] = useState("");

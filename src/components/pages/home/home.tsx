@@ -1,6 +1,6 @@
-import Categories from "src/components/pages/home/homeComponents/categories";
-import NewGames from "src/components/pages/home/homeComponents/newGames";
-import SearchBar from "src/components/pages/home/homeComponents/searchBar";
+import Categories from "@/components/pages/home/categories/categories";
+import NewGames from "@/components/pages/home/newGames/newGames";
+import SearchBar from "@/components/pages/home/searchBar/searchBar";
 
 function Home() {
   return (
