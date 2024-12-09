@@ -1,4 +1,3 @@
-// src/components/header/dropdown.tsx
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { Route } from "src/constants/routes";

@@ -1,6 +1,8 @@
 import platformIcons from "src/constants/platforms";
-import { GameCardProps } from "src/shared/models/game.t";
-import * as styles from "./card.m.scss"; // Import styles
+import { Game } from "src/shared/models/game";
+import * as styles from "./card.m.scss";
+
+interface GameCardProps extends Game {}
 
 function GameCard({ title, price, rating, ageRating, cover, platforms, description }: GameCardProps) {
   return (

@@ -1,6 +1,5 @@
-import { GameCardProps } from "src/shared/models/game.t";
+import { Game } from "src/shared/models/game";
 
-// Generic API request handler
 const apiRequest = async <T>(url: string): Promise<T> => {
   const response = await fetch(url);
   if (!response.ok) {
@@ -9,10 +8,10 @@ const apiRequest = async <T>(url: string): Promise<T> => {
   return response.json();
 };
 
-export const fetchTopGames = (): Promise<GameCardProps[]> => {
-  return apiRequest<GameCardProps[]>("/api/products/top");
+export const fetchTopGames = (): Promise<Game[]> => {
+  return apiRequest<Game[]>("/api/products/top");
 };
 
-export const searchGames = (text: string): Promise<GameCardProps[]> => {
-  return apiRequest<GameCardProps[]>(`/api/search?text=${text}`);
+export const searchGames = (text: string): Promise<Game[]> => {
+  return apiRequest<Game[]>(`/api/search?text=${text}`);
 };

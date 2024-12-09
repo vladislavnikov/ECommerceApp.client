@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
 import { debounce } from "lodash";
-import { GameCardProps } from "src/shared/models/game.t";
+import { Game } from "src/shared/models/game";
 import { searchGames } from "src/api/services/gameService";
 import * as styles from "./searchBar.m.scss";
 
 function SearchBar() {
   const [searchText, setSearchText] = useState("");
-  const [results, setResults] = useState<GameCardProps[]>([]);
+  const [results, setResults] = useState<Game[]>([]);
   const [loading, setLoading] = useState(false);
 
   const debouncedSearch = debounce(async (text: string) => {
@@ -31,11 +31,11 @@ function SearchBar() {
     return debouncedSearch.cancel;
   }, [searchText]);
 
-  const handleSelectGame = (game: GameCardProps) => {
+  const handleSelectGame = (game: Game) => {
     alert(`Got product: ${game.title}`);
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent, game: GameCardProps) => {
+  const handleKeyDown = (event: React.KeyboardEvent, game: Game) => {
     if (event.key === "Enter" || event.key === " ") {
       handleSelectGame(game);
     }

@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import { GameCardProps } from "src/shared/models/game.t";
+import { Game } from "src/shared/models/game";
 import GameCard from "src/components/pages/home/homeComponents/card";
 import * as styles from "src/components/pages/home/homeComponents/newGames.m.scss";
 import { fetchTopGames } from "src/api/services/gameService";
 
 function NewGames() {
-  const [games, setGames] = useState<GameCardProps[]>([]);
+  const [games, setGames] = useState<Game[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -14,7 +14,7 @@ function NewGames() {
       try {
         const data = await fetchTopGames();
 
-        const sortedGames = data.sort((a: GameCardProps, b: GameCardProps) => {
+        const sortedGames = data.sort((a: Game, b: Game) => {
           const dateA = new Date(a.releaseDate).getTime();
           const dateB = new Date(b.releaseDate).getTime();
           return dateB - dateA;
@@ -45,7 +45,7 @@ function NewGames() {
       <h2>New Games</h2>
       <div className={styles.gamesContainer}>
         {games.map((game) => (
-          <GameCard key={game.id || game.releaseDate} {...game} />
+          <GameCard key={game.id} {...game} platforms={game.platforms} />
         ))}
       </div>
     </div>
