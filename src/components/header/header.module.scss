@@ -50,4 +50,47 @@
       }
     }
   }
+
+  .user {
+    font-size: 16px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+  }
+
+  .signOut {
+    font-size: 16px;
+    color: #fff;
+    background-color: transparent;
+    border: 1px solid #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+
+    &:hover {
+      background-color: #892fb0;
+      color: #fff;
+    }
+  }
+
+  .signIn,
+  .signUp {
+    font-size: 16px;
+    color: #fff;
+    background-color: transparent;
+    border: transparent;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+
+    &:hover {
+      background-color: #272727;
+      color: #fff;
+    }
+  }
 }

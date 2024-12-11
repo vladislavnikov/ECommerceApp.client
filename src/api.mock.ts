@@ -54,4 +54,22 @@ export default webpackMockServer.add((app) => {
     const results = mockTopGames.filter((game) => game.title.toLowerCase().includes(searchText.toLowerCase()));
     res.json(results);
   });
+
+  app.post("/api/auth/signIn/", (req, res) => {
+    const { username, password } = req.body;
+    if (username && password) {
+      res.status(200).json({ message: "SignIn successful" });
+    } else {
+      res.status(400).json({ message: "Invalid credentials" });
+    }
+  });
+
+  app.put("/api/auth/signUp", (req, res) => {
+    const { username, password } = req.body;
+    if (username && password) {
+      res.status(201).json({ message: "SignUp successful" });
+    } else {
+      res.status(400).json({ message: "SignUp failed. Please try again." });
+    }
+  });
 });

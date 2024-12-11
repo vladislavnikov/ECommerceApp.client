@@ -1,0 +1,45 @@
+.formGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.formLabel {
+  width: 100px;
+  text-align: left;
+  margin-right: 10px;
+  color: white;
+}
+
+.inputWrapper {
+  position: relative;
+  flex-grow: 1;
+  max-width: 300px;
+  width: 100%;
+}
+
+.formInput {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 10px 30px 10px 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #666;
+  font-size: 16px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}

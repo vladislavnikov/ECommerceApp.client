@@ -1,0 +1,88 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modalContent {
+  background-color: #121211;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  max-width: 500px;
+  width: 90%; /* Responsive width */
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0px px 0px 0px rgba(255, 255, 255, 1);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+}
+
+.modalClose {
+  color: white;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+
+  &:hover {
+    color: #ff5c5c;
+  }
+}
+
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  color: white;
+  font-size: 16px;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.formHeader {
+  font-size: 22px;
+  color: #fff;
+  text-align: center;
+}
+
+.submitWrapper {
+  text-align: center;
+}
+
+.submitBtn {
+  background-color: purple;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+
+  &:hover {
+    background-color: rgb(85, 2, 85);
+  }
+}
