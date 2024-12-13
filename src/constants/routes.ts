@@ -3,6 +3,7 @@ export const ROUTES = {
   ABOUT: "/about",
   PRODUCTS: "/products",
   NOT_FOUND: "/404",
+  PROFILE: "/profile",
 
   CATEGORIES: {
     PC: "/products/category/pc",

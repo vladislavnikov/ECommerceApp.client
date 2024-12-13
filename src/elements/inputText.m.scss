@@ -1,9 +1,15 @@
 .formGroup {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   margin-bottom: 15px;
   width: 100%;
+  flex-wrap: wrap;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
 }
 
 .formLabel {
@@ -11,6 +17,13 @@
   text-align: left;
   margin-right: 10px;
   color: white;
+  font-size: 14px;
+
+  @media (max-width: 480px) {
+    margin-bottom: 5px;
+    text-align: left;
+    width: auto;
+  }
 }
 
 .inputWrapper {
@@ -18,28 +31,88 @@
   flex-grow: 1;
   max-width: 300px;
   width: 100%;
+
+  @media (max-width: 480px) {
+    max-width: 100%;
+  }
 }
 
 .formInput {
   width: 100%;
   background-color: black;
   color: white;
-  padding: 10px 30px 10px 10px;
+  padding: 10px 10px;
   border: 1px solid #ccc;
+  border-radius: 4px;
   font-size: 14px;
+  text-align: left;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #007bff;
+    outline: none;
+  }
 }
 
 .inputIcon {
   position: absolute;
-  left: 10px;
+  right: 10px;
   top: 50%;
   transform: translateY(-50%);
-  color: #666;
-  font-size: 16px;
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  pointer-events: none;
+  filter: invert(100%);
 }
 
 .error {
   color: red;
   font-size: 12px;
   margin-top: 5px;
+  width: 100%;
+  text-align: left;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modalClose {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.dropdownOption {
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
 }

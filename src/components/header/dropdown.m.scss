@@ -24,14 +24,14 @@
     display: inline-block;
 
     &.open {
-      transform: rotate(180deg); /* Rotate only the arrow */
+      transform: rotate(180deg);
     }
   }
 
   .dropdownContent {
     display: none;
     position: absolute;
-    top: 100%; /* Ensure the dropdown menu opens below the button */
+    top: 100%;
     left: 0;
     text-align: center;
     background-color: #000;
@@ -51,7 +51,7 @@
     }
 
     &.open {
-      display: block; /* Only display the dropdown content when it's open */
+      display: block;
     }
   }
 

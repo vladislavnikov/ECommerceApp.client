@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as styles from "./inputText.m.scss";
 
 interface InputTextProps {
@@ -10,7 +10,7 @@ interface InputTextProps {
   required?: boolean;
   errorMessage?: string;
   validate?: (value: string) => string | null;
-  icon?: React.ReactNode;
+  icon?: string; // Icon URL
 }
 
 function InputText({ type, label, value, onChange, placeholder, required = false, errorMessage, validate, icon }: InputTextProps) {
@@ -29,7 +29,7 @@ function InputText({ type, label, value, onChange, placeholder, required = false
         {label}
       </label>
       <div className={styles.inputWrapper}>
-        {icon && <span className={styles.inputIcon}>{icon}</span>}
+        {icon && <img src={icon} alt={`${label} icon`} className={styles.inputIcon} />}
         <input
           id={label}
           type={type}
