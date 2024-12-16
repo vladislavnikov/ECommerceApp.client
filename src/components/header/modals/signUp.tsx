@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import InputText from "src/elements/inputText";
 import idCardIcon from "src/assets/icons/idCard.png";
 import passIcon from "src/assets/icons/resetPassword.svg";
+import { validateUsername, validatePassword, validateRepeatPassword } from "src/validators/signUpValidators";
 import * as styles from "./modal.m.scss";
 
 interface SignUpProps {
@@ -14,36 +15,58 @@ function SignUp({ onSubmit }: SignUpProps) {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  const validateForm = () => {
-    const newErrors: { [key: string]: string } = {};
-    if (password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters.";
+  const handleBlur = (field: string, value: string) => {
+    const newErrors = { ...errors };
+
+    if (field === "username") newErrors.username = validateUsername(value) || "";
+    if (field === "password") newErrors.password = validatePassword(value) || "";
+    if (field === "repeatPassword") {
+      newErrors.repeatPassword = validateRepeatPassword(password, value) || "";
     }
-    if (!/[A-Za-z]/.test(password) || !/\d/.test(password)) {
-      newErrors.password = "Password must contain both letters and numbers.";
-    }
-    if (repeatPassword !== password) {
-      newErrors.repeatPassword = "Passwords do not match.";
-    }
-    return newErrors;
+
+    setErrors(newErrors);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const formErrors = validateForm();
-    if (Object.keys(formErrors).length === 0) {
+
+    const newErrors = {
+      username: validateUsername(username) || "",
+      password: validatePassword(password) || "",
+      repeatPassword: validateRepeatPassword(password, repeatPassword) || "",
+    };
+
+    setErrors(newErrors);
+
+    if (Object.values(newErrors).every((error) => !error)) {
       onSubmit(username, password);
-    } else {
-      setErrors(formErrors);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.loginForm}>
-      <InputText type="text" label="Login" value={username} onChange={setUsername} required placeholder="" icon={idCardIcon} />
+      <InputText
+        type="text"
+        label="Login"
+        value={username}
+        onChange={setUsername}
+        onBlur={() => handleBlur("username", username)}
+        required
+        placeholder="Enter your username"
+        icon={idCardIcon}
+      />
       {errors.username && <p className={styles.errorMessage}>{errors.username}</p>}
 
-      <InputText type="password" label="Password" value={password} onChange={setPassword} required placeholder="" icon={passIcon} />
+      <InputText
+        type="password"
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        onBlur={() => handleBlur("password", password)}
+        required
+        placeholder="Enter your password"
+        icon={passIcon}
+      />
       {errors.password && <p className={styles.errorMessage}>{errors.password}</p>}
 
       <InputText
@@ -51,8 +74,9 @@ function SignUp({ onSubmit }: SignUpProps) {
         label="Repeat Password"
         value={repeatPassword}
         onChange={setRepeatPassword}
+        onBlur={() => handleBlur("repeatPassword", repeatPassword)}
         required
-        placeholder=""
+        placeholder="Repeat your password"
         icon={passIcon}
       />
       {errors.repeatPassword && <p className={styles.errorMessage}>{errors.repeatPassword}</p>}

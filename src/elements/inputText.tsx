@@ -6,14 +6,15 @@ interface InputTextProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  onBlur?: () => void;
   placeholder?: string;
   required?: boolean;
   errorMessage?: string;
   validate?: (value: string) => string | null;
-  icon?: string; // Icon URL
+  icon?: string;
 }
 
-function InputText({ type, label, value, onChange, placeholder, required = false, errorMessage, validate, icon }: InputTextProps) {
+function InputText({ type, label, value, onChange, onBlur, placeholder, required = false, errorMessage, validate, icon }: InputTextProps) {
   const [error, setError] = useState<string | null>(null);
 
   const handleBlur = () => {
@@ -21,6 +22,7 @@ function InputText({ type, label, value, onChange, placeholder, required = false
       const validationError = validate(value);
       setError(validationError);
     }
+    if (onBlur) onBlur();
   };
 
   return (

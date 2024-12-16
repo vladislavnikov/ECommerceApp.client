@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputText from "src/elements/inputText";
 import idCardIcon from "src/assets/icons/idCard.png";
-import pass from "src/assets/icons/more.png";
+import passIcon from "src/assets/icons/more.png";
 import * as styles from "./modal.m.scss";
 
 interface SignInProps {
@@ -13,11 +13,24 @@ function SignIn({ onSubmit }: SignInProps) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const validateUsername = (value: string) => {
+    if (!value) return "Username is required.";
+    return null;
+  };
+
+  const validatePassword = (value: string) => {
+    if (!value) return "Password is required.";
+    return null;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!username || !password) {
-      setError("Username and password are required.");
+    const usernameError = validateUsername(username);
+    const passwordError = validatePassword(password);
+
+    if (usernameError || passwordError) {
+      setError(usernameError || passwordError);
       return;
     }
 
@@ -27,8 +40,28 @@ function SignIn({ onSubmit }: SignInProps) {
 
   return (
     <form onSubmit={handleSubmit} className={styles.loginForm}>
-      <InputText type="text" label="Login" value={username} onChange={setUsername} required placeholder="" icon={idCardIcon} />
-      <InputText type="password" label="Password" value={password} onChange={setPassword} required placeholder="" icon={pass} />
+      <InputText
+        type="text"
+        label="Login"
+        value={username}
+        onChange={setUsername}
+        validate={validateUsername}
+        required
+        placeholder=""
+        icon={idCardIcon}
+      />
+
+      <InputText
+        type="password"
+        label="Password"
+        value={password}
+        onChange={setPassword}
+        validate={validatePassword}
+        required
+        placeholder=""
+        icon={passIcon}
+      />
+
       {error && <div className={styles.errorMessage}>{error}</div>}
       <div className={styles.submitWrapper}>
         <button type="submit" className={styles.submitBtn} aria-label="Sign in button">

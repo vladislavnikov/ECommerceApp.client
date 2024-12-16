@@ -71,13 +71,23 @@ function Header({
 
       {isSignInOpen && (
         <Modal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)}>
-          <SignIn onSubmit={onSignIn} />
+          <SignIn
+            onSubmit={(username, password) => {
+              onSignIn(username, password);
+              setSignInOpen(false);
+            }}
+          />
         </Modal>
       )}
 
       {isSignUpOpen && (
         <Modal isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)}>
-          <SignUp onSubmit={onSignUp} />
+          <SignUp
+            onSubmit={(username, password) => {
+              onSignUp(username, password);
+              setSignUpOpen(false);
+            }}
+          />
         </Modal>
       )}
     </header>

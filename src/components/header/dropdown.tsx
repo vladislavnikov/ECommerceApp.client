@@ -47,7 +47,12 @@ function Dropdown({ label, routes, user, onSignIn }: DropdownProps) {
 
       {isSignInOpen && (
         <Modal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)}>
-          <SignIn onSubmit={onSignIn} />
+          <SignIn
+            onSubmit={(username, password) => {
+              onSignIn(username, password);
+              setSignInOpen(false);
+            }}
+          />
         </Modal>
       )}
     </div>
