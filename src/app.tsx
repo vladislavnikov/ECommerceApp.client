@@ -37,7 +37,7 @@ function App() {
           <Route
             path="/products"
             element={
-              <ProtectedRoute isAuthenticated={!!user} onAuthUser={setUser}>
+              <ProtectedRoute isAuthenticated={!user} onAuthUser={setUser}>
                 <Products />
               </ProtectedRoute>
             }
@@ -45,7 +45,7 @@ function App() {
           <Route
             path="/about"
             element={
-              <ProtectedRoute isAuthenticated={!!user} onAuthUser={setUser}>
+              <ProtectedRoute isAuthenticated={!user} onAuthUser={setUser}>
                 <About />
               </ProtectedRoute>
             }
@@ -53,7 +53,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute isAuthenticated={!!user} onAuthUser={setUser}>
+              <ProtectedRoute isAuthenticated={!user} onAuthUser={setUser}>
                 <Profile />
               </ProtectedRoute>
             }

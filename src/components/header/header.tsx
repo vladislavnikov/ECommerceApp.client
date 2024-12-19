@@ -49,10 +49,12 @@ function Header({
             <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
               <img src={shoppingCard} alt="Shopping Cart" />
             </NavLink>
-            <span className={styles.user}>
-              <img src={userIcon} alt="User Icon" />
-              {user}
-            </span>
+            <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
+              <span className={styles.user}>
+                <img src={userIcon} alt="User Icon" />
+                {user}
+              </span>
+            </NavLink>
             <button className={styles.signOut} onClick={handleSignOut} type="button" aria-label="Sign out">
               <img src={logOutImage} alt="Log Out" />
             </button>
