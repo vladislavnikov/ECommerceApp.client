@@ -38,7 +38,7 @@ function Header({
           Home
         </NavLink>
 
-        <Dropdown label="Products" routes={PRODUCT_ROUTES} user={user} onSignIn={onSignIn} />
+        <Dropdown label="Products" routes={PRODUCT_ROUTES} onSignIn={onSignIn} />
 
         <NavLink to={ROUTES.ABOUT} className={({ isActive }) => (isActive ? styles.active : "")}>
           About

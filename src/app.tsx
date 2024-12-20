@@ -1,7 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Modal from "src/components/header/modals/modal";
-import SignIn from "src/components/header/modals/signIn";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./components/pages/home/home";
@@ -12,19 +10,18 @@ import ProtectedRoute from "./routes/protectedRoute";
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
-  const [isSignInOpen, setSignInOpen] = useState(false);
+
+  useEffect(() => {}, [user]);
 
   const handleSignIn = (username: string) => {
     setTimeout(() => {
       setUser(username);
-      setSignInOpen(false);
     }, 1000);
   };
 
   const handleSignUp = (username: string) => {
     setTimeout(() => {
       setUser(username);
-      setSignInOpen(false);
     }, 1000);
   };
 
@@ -33,11 +30,19 @@ function App() {
       <Header onAuthUser={setUser} user={user} onSignIn={handleSignIn} onSignUp={handleSignUp} />
       <main>
         <Routes>
-          <Route path="/" element={<Home user={user} setSignInOpen={setSignInOpen} />} />
+          <Route path="/" element={<Home />} />
           <Route
             path="/products"
             element={
-              <ProtectedRoute isAuthenticated={!user} onAuthUser={setUser}>
+              <ProtectedRoute user={user} onAuthUser={setUser}>
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/category/:category"
+            element={
+              <ProtectedRoute user={user} onAuthUser={setUser}>
                 <Products />
               </ProtectedRoute>
             }
@@ -45,7 +50,7 @@ function App() {
           <Route
             path="/about"
             element={
-              <ProtectedRoute isAuthenticated={!user} onAuthUser={setUser}>
+              <ProtectedRoute user={user} onAuthUser={setUser}>
                 <About />
               </ProtectedRoute>
             }
@@ -53,7 +58,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute isAuthenticated={!user} onAuthUser={setUser}>
+              <ProtectedRoute user={user} onAuthUser={setUser}>
                 <Profile />
               </ProtectedRoute>
             }
@@ -62,12 +67,6 @@ function App() {
         </Routes>
       </main>
       <Footer />
-
-      {isSignInOpen && (
-        <Modal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)}>
-          <SignIn onSubmit={handleSignIn} />
-        </Modal>
-      )}
     </Router>
   );
 }

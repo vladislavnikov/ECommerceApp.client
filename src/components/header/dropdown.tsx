@@ -8,20 +8,12 @@ import * as styles from "./dropdown.m.scss";
 interface DropdownProps {
   label: string;
   routes: Route[];
-  user: string | null;
   onSignIn: (username: string, password: string) => void;
 }
 
-function Dropdown({ label, routes, user, onSignIn }: DropdownProps) {
+function Dropdown({ label, routes, onSignIn }: DropdownProps) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isSignInOpen, setSignInOpen] = useState(false);
-
-  const handleClick = (e: React.MouseEvent, requiresLogin: boolean) => {
-    if (requiresLogin && !user) {
-      e.preventDefault();
-      setSignInOpen(true);
-    }
-  };
 
   return (
     <div className={styles.dropdown} onMouseEnter={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
@@ -33,12 +25,7 @@ function Dropdown({ label, routes, user, onSignIn }: DropdownProps) {
       {isDropdownOpen && (
         <div className={`${styles.dropdownContent} ${isDropdownOpen ? styles.open : ""}`}>
           {routes.map(({ path, name }) => (
-            <NavLink
-              key={path}
-              to={path}
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              onClick={(e) => handleClick(e, true)}
-            >
+            <NavLink key={path} to={path} className={({ isActive }) => (isActive ? styles.active : "")}>
               {name}
             </NavLink>
           ))}
