@@ -2,26 +2,20 @@ import { useState, useEffect, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import Modal from "src/components/header/modals/modal";
 import SignIn from "src/components/header/modals/signIn";
+import { useUser } from "src/elements/userContext";
 
-function ProtectedRoute({
-  user,
-  onAuthUser,
-  children,
-}: {
-  user: string | null;
-  onAuthUser: (user: string | null) => void;
-  children: ReactNode;
-}) {
+function ProtectedRoute({ children }: { children: ReactNode }) {
   const [isSignInOpen, setSignInOpen] = useState(false);
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const { currentUser, onAuthUser } = useUser();
 
   console.log("test");
 
   useEffect(() => {
-    if (user === null) {
+    if (currentUser === null) {
       setSignInOpen(true);
     }
-  }, [user]);
+  }, [currentUser]);
 
   const handleSignIn = (username: string, password: string) => {
     console.log("Signing in:", { username, password });
@@ -41,7 +35,7 @@ function ProtectedRoute({
     return <Navigate to="/" replace />;
   }
 
-  if (user === null) {
+  if (currentUser === null) {
     return (
       isSignInOpen && (
         <Modal isOpen={isSignInOpen} onClose={handleCloseModal}>

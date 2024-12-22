@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
@@ -9,32 +8,16 @@ import Profile from "./components/pages/profile";
 import ProtectedRoute from "./routes/protectedRoute";
 
 function App() {
-  const [user, setUser] = useState<string | null>(null);
-
-  useEffect(() => {}, [user]);
-
-  const handleSignIn = (username: string) => {
-    setTimeout(() => {
-      setUser(username);
-    }, 1000);
-  };
-
-  const handleSignUp = (username: string) => {
-    setTimeout(() => {
-      setUser(username);
-    }, 1000);
-  };
-
   return (
     <Router>
-      <Header onAuthUser={setUser} user={user} onSignIn={handleSignIn} onSignUp={handleSignUp} />
+      <Header />
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
             path="/products"
             element={
-              <ProtectedRoute user={user} onAuthUser={setUser}>
+              <ProtectedRoute>
                 <Products />
               </ProtectedRoute>
             }
@@ -42,7 +25,7 @@ function App() {
           <Route
             path="/products/category/:category"
             element={
-              <ProtectedRoute user={user} onAuthUser={setUser}>
+              <ProtectedRoute>
                 <Products />
               </ProtectedRoute>
             }
@@ -50,7 +33,7 @@ function App() {
           <Route
             path="/about"
             element={
-              <ProtectedRoute user={user} onAuthUser={setUser}>
+              <ProtectedRoute>
                 <About />
               </ProtectedRoute>
             }
@@ -58,7 +41,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute user={user} onAuthUser={setUser}>
+              <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
             }

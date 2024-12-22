@@ -3,6 +3,8 @@ import { createContext, useState, useContext, ReactNode, useMemo } from "react";
 interface UserContextType {
   currentUser: string | null;
   onAuthUser: (user: string | null) => void;
+  handleSignIn: (username: string, password: string) => void; // Added here
+  handleSignUp: (username: string, password: string) => void; // Added here
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -18,7 +20,29 @@ export function UserProvider({ children }: UserProviderProps) {
     setCurrentUser(user);
   };
 
-  const value = useMemo(() => ({ currentUser, onAuthUser }), [currentUser]);
+  const handleSignIn = (username: string) => {
+    console.log("Signing in user:", username); // Add API logic here
+    setTimeout(() => {
+      onAuthUser(username); // Simulate setting the user
+    }, 1000);
+  };
+
+  const handleSignUp = (username: string) => {
+    console.log("Signing up user:", username); // Add API logic here
+    setTimeout(() => {
+      onAuthUser(username); // Simulate setting the user
+    }, 1000);
+  };
+
+  const value = useMemo(
+    () => ({
+      currentUser,
+      onAuthUser,
+      handleSignIn,
+      handleSignUp,
+    }),
+    [currentUser],
+  );
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
