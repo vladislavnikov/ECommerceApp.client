@@ -1,47 +1,42 @@
-import { useState, useEffect, ReactNode } from "react";
-import { Navigate } from "react-router-dom";
-import Modal from "src/components/header/modals/modal";
+import { useState, ReactNode } from "react";
+import Modal from "src/elements/modal";
 import SignIn from "src/components/header/modals/signIn";
-import { useUser } from "src/elements/userContext";
+import SignUp from "src/components/header/modals/signUp";
+import useUser from "src/shared/hooks/useUser";
 
 function ProtectedRoute({ children }: { children: ReactNode }) {
-  const [isSignInOpen, setSignInOpen] = useState(false);
-  const [redirectToHome, setRedirectToHome] = useState(false);
   const { currentUser, onAuthUser } = useUser();
+  const [isSignInOpen, setSignInOpen] = useState(() => !currentUser);
+  const [isSignUpOpen, setSignUpOpen] = useState(false);
 
-  console.log("test");
-
-  useEffect(() => {
-    if (currentUser === null) {
-      setSignInOpen(true);
-    }
-  }, [currentUser]);
-
-  const handleSignIn = (username: string, password: string) => {
-    console.log("Signing in:", { username, password });
-
+  const handleSignIn = (username: string) => {
     setTimeout(() => {
       onAuthUser(username);
       setSignInOpen(false);
     }, 1000);
   };
 
-  const handleCloseModal = () => {
-    setSignInOpen(false);
-    setRedirectToHome(true);
+  const handleSignUp = (username: string) => {
+    setTimeout(() => {
+      onAuthUser(username);
+      setSignUpOpen(false);
+    }, 1000);
   };
 
-  if (redirectToHome) {
-    return <Navigate to="/" replace />;
-  }
-
-  if (currentUser === null) {
+  if (!currentUser) {
     return (
-      isSignInOpen && (
-        <Modal isOpen={isSignInOpen} onClose={handleCloseModal}>
-          <SignIn onSubmit={handleSignIn} />
-        </Modal>
-      )
+      <>
+        {isSignInOpen && (
+          <Modal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)} title="Sign In">
+            <SignIn onSubmit={handleSignIn} />
+          </Modal>
+        )}
+        {isSignUpOpen && (
+          <Modal isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)} title="Sign Up">
+            <SignUp onSubmit={handleSignUp} />
+          </Modal>
+        )}
+      </>
     );
   }
 

@@ -3,7 +3,7 @@ import InputText from "src/elements/inputText";
 import idCardIcon from "src/assets/icons/idCard.png";
 import passIcon from "src/assets/icons/resetPassword.svg";
 import { validateUsername, validatePassword, validateRepeatPassword } from "src/validators/signUpValidators";
-import * as styles from "./modal.m.scss";
+import * as styles from "src/elements/modal.m.scss";
 
 interface SignUpProps {
   onSubmit: (username: string, password: string) => void;

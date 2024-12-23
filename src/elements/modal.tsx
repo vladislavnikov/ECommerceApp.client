@@ -9,7 +9,7 @@ interface ModalProps {
   title?: string;
 }
 
-function Modal({ isOpen, onClose, children, title = "Authorization" }: ModalProps) {
+function Modal({ isOpen, onClose, children, title }: ModalProps) {
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "";
     return () => {
@@ -23,7 +23,7 @@ function Modal({ isOpen, onClose, children, title = "Authorization" }: ModalProp
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <div className={styles.modalHeader}>
-          <h2 className={styles.modalTitle}>{title}</h2>
+          {title && <h2 className={styles.modalTitle}>{title}</h2>}
           <button className={styles.modalClose} onClick={onClose} type="button" aria-label="Close Modal">
             &times;
           </button>

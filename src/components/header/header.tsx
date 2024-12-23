@@ -1,20 +1,19 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import Dropdown from "src/components/header/dropdown";
-import Modal from "src/components/header/modals/modal";
-import SignIn from "src/components/header/modals/signIn";
-import SignUp from "src/components/header/modals/signUp";
 import { ROUTES, PRODUCT_ROUTES } from "src/constants/routes";
 import * as styles from "src/components/header/header.module.scss";
 import logOutImage from "src/assets/icons/logout.png";
 import userIcon from "src/assets/icons/user.png";
 import shoppingCard from "src/assets/icons/shoppingCart.png";
-import { useUser } from "src/elements/userContext";
+import useUser from "src/shared/hooks/useUser";
+import SignInModal from "./modals/signInModal";
+import SignUpModal from "./modals/signUpModal";
 
 function Header() {
   const [isSignInOpen, setSignInOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
-  const { currentUser, onAuthUser, handleSignIn } = useUser();
+  const { currentUser, onAuthUser } = useUser();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -63,27 +62,9 @@ function Header() {
         )}
       </nav>
 
-      {isSignInOpen && (
-        <Modal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)}>
-          <SignIn
-            onSubmit={(username, password) => {
-              handleSignIn(username, password);
-              setSignInOpen(false);
-            }}
-          />
-        </Modal>
-      )}
+      <SignInModal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)} />
 
-      {isSignUpOpen && (
-        <Modal isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)}>
-          <SignUp
-            onSubmit={(username, password) => {
-              handleSignIn(username, password);
-              setSignUpOpen(false);
-            }}
-          />
-        </Modal>
-      )}
+      <SignUpModal isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)} />
     </header>
   );
 }

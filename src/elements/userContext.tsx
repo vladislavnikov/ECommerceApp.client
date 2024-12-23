@@ -1,13 +1,13 @@
-import { createContext, useState, useEffect, useContext, ReactNode, useMemo } from "react";
+import { createContext, useState, useEffect, ReactNode, useMemo } from "react";
 
-interface UserContextType {
+export interface UserContextType {
   currentUser: string | null;
   onAuthUser: (user: string | null) => void;
   handleSignIn: (username: string, password: string) => void;
   handleSignUp: (username: string, password: string) => void;
 }
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 interface UserProviderProps {
   children: ReactNode;
@@ -56,11 +56,3 @@ export function UserProvider({ children }: UserProviderProps) {
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 }
-
-export const useUser = (): UserContextType => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error("useUser must be used within a UserProvider");
-  }
-  return context;
-};
