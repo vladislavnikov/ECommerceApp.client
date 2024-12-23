@@ -1,4 +1,4 @@
-const API_URL = "https://example.com/api";
+const API_URL = "http://localhost:8082/api/auth";
 
 export const signInApi = async (username: string, password: string) => {
   try {

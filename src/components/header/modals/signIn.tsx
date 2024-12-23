@@ -11,7 +11,6 @@ interface SignInProps {
 function SignIn({ onSubmit }: SignInProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
 
   const validateUsername = (value: string) => {
     if (!value) return "Username is required.";
@@ -30,11 +29,9 @@ function SignIn({ onSubmit }: SignInProps) {
     const passwordError = validatePassword(password);
 
     if (usernameError || passwordError) {
-      setError(usernameError || passwordError);
       return;
     }
 
-    setError(null);
     onSubmit(username, password);
   };
 
@@ -47,7 +44,7 @@ function SignIn({ onSubmit }: SignInProps) {
         onChange={setUsername}
         validate={validateUsername}
         required
-        placeholder=""
+        placeholder="Enter your username"
         icon={idCardIcon}
       />
 
@@ -58,11 +55,10 @@ function SignIn({ onSubmit }: SignInProps) {
         onChange={setPassword}
         validate={validatePassword}
         required
-        placeholder=""
+        placeholder="Enter your password"
         icon={passIcon}
       />
 
-      {error && <div className={styles.errorMessage}>{error}</div>}
       <div className={styles.submitWrapper}>
         <button type="submit" className={styles.submitBtn} aria-label="Sign in button">
           Submit

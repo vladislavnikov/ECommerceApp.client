@@ -8,10 +8,10 @@ interface SignUpModalProps {
 }
 
 function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
-  const { handleSignUp } = useUser();
+  const { handleSignIn } = useUser();
 
   const handleSubmit = (username: string, password: string) => {
-    handleSignUp(username, password);
+    handleSignIn(username, password);
     onClose();
   };
 
