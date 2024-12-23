@@ -1,7 +1,4 @@
-import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import Modal from "src/components/header/modals/modal";
-import SignIn from "src/components/header/modals/signIn";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./components/pages/home/home";
@@ -11,33 +8,24 @@ import Profile from "./components/pages/profile";
 import ProtectedRoute from "./routes/protectedRoute";
 
 function App() {
-  const [user, setUser] = useState<string | null>(null);
-  const [isSignInOpen, setSignInOpen] = useState(false);
-
-  const handleSignIn = (username: string) => {
-    setTimeout(() => {
-      setUser(username);
-      setSignInOpen(false);
-    }, 1000);
-  };
-
-  const handleSignUp = (username: string) => {
-    setTimeout(() => {
-      setUser(username);
-      setSignInOpen(false);
-    }, 1000);
-  };
-
   return (
     <Router>
-      <Header onAuthUser={setUser} user={user} onSignIn={handleSignIn} onSignUp={handleSignUp} />
+      <Header />
       <main>
         <Routes>
-          <Route path="/" element={<Home user={user} setSignInOpen={setSignInOpen} />} />
+          <Route path="/" element={<Home />} />
           <Route
             path="/products"
             element={
-              <ProtectedRoute isAuthenticated={!!user} onAuthUser={setUser}>
+              <ProtectedRoute>
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/category/:category"
+            element={
+              <ProtectedRoute>
                 <Products />
               </ProtectedRoute>
             }
@@ -45,7 +33,7 @@ function App() {
           <Route
             path="/about"
             element={
-              <ProtectedRoute isAuthenticated={!!user} onAuthUser={setUser}>
+              <ProtectedRoute>
                 <About />
               </ProtectedRoute>
             }
@@ -53,7 +41,7 @@ function App() {
           <Route
             path="/profile"
             element={
-              <ProtectedRoute isAuthenticated={!!user} onAuthUser={setUser}>
+              <ProtectedRoute>
                 <Profile />
               </ProtectedRoute>
             }
@@ -62,12 +50,6 @@ function App() {
         </Routes>
       </main>
       <Footer />
-
-      {isSignInOpen && (
-        <Modal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)}>
-          <SignIn onSubmit={handleSignIn} />
-        </Modal>
-      )}
     </Router>
   );
 }

@@ -9,20 +9,12 @@ import * as styles from "src/components/header/header.module.scss";
 import logOutImage from "src/assets/icons/logout.png";
 import userIcon from "src/assets/icons/user.png";
 import shoppingCard from "src/assets/icons/shoppingCart.png";
+import { useUser } from "src/elements/userContext";
 
-function Header({
-  onAuthUser,
-  user,
-  onSignIn,
-  onSignUp,
-}: {
-  onAuthUser: (user: string | null) => void;
-  user: string | null;
-  onSignIn: (username: string, password: string) => void;
-  onSignUp: (username: string, password: string) => void;
-}) {
+function Header() {
   const [isSignInOpen, setSignInOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
+  const { currentUser, onAuthUser, handleSignIn } = useUser();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
@@ -38,21 +30,23 @@ function Header({
           Home
         </NavLink>
 
-        <Dropdown label="Products" routes={PRODUCT_ROUTES} user={user} onSignIn={onSignIn} />
+        <Dropdown label="Products" routes={PRODUCT_ROUTES} />
 
         <NavLink to={ROUTES.ABOUT} className={({ isActive }) => (isActive ? styles.active : "")}>
           About
         </NavLink>
 
-        {user ? (
+        {currentUser ? (
           <>
             <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
               <img src={shoppingCard} alt="Shopping Cart" />
             </NavLink>
-            <span className={styles.user}>
-              <img src={userIcon} alt="User Icon" />
-              {user}
-            </span>
+            <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
+              <span className={styles.user}>
+                <img src={userIcon} alt="User Icon" />
+                {currentUser}
+              </span>
+            </NavLink>
             <button className={styles.signOut} onClick={handleSignOut} type="button" aria-label="Sign out">
               <img src={logOutImage} alt="Log Out" />
             </button>
@@ -73,7 +67,7 @@ function Header({
         <Modal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)}>
           <SignIn
             onSubmit={(username, password) => {
-              onSignIn(username, password);
+              handleSignIn(username, password);
               setSignInOpen(false);
             }}
           />
@@ -84,7 +78,7 @@ function Header({
         <Modal isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)}>
           <SignUp
             onSubmit={(username, password) => {
-              onSignUp(username, password);
+              handleSignIn(username, password);
               setSignUpOpen(false);
             }}
           />

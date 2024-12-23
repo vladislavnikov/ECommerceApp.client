@@ -1,30 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect, ReactNode } from "react";
 import { Navigate } from "react-router-dom";
 import Modal from "src/components/header/modals/modal";
 import SignIn from "src/components/header/modals/signIn";
+import { useUser } from "src/elements/userContext";
 
-function ProtectedRoute({
-  isAuthenticated,
-  onAuthUser,
-  children,
-}: {
-  isAuthenticated: boolean;
-  onAuthUser: (user: string | null) => void;
-  children: JSX.Element;
-}) {
-  const [isSignInOpen, setSignInOpen] = useState(!isAuthenticated);
+function ProtectedRoute({ children }: { children: ReactNode }) {
+  const [isSignInOpen, setSignInOpen] = useState(false);
   const [redirectToHome, setRedirectToHome] = useState(false);
+  const { currentUser, onAuthUser } = useUser();
+
+  console.log("test");
+
+  useEffect(() => {
+    if (currentUser === null) {
+      setSignInOpen(true);
+    }
+  }, [currentUser]);
 
   const handleSignIn = (username: string, password: string) => {
     console.log("Signing in:", { username, password });
 
     setTimeout(() => {
-      if (username === "validUser" && password === "password") {
-        onAuthUser(username);
-        setSignInOpen(false);
-      } else {
-        window.alert("Invalid credentials. Please try again.");
-      }
+      onAuthUser(username);
+      setSignInOpen(false);
     }, 1000);
   };
 
@@ -37,7 +35,7 @@ function ProtectedRoute({
     return <Navigate to="/" replace />;
   }
 
-  if (!isAuthenticated) {
+  if (currentUser === null) {
     return (
       isSignInOpen && (
         <Modal isOpen={isSignInOpen} onClose={handleCloseModal}>

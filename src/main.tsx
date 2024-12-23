@@ -2,6 +2,7 @@ import "./styles/main.scss";
 import ReactDOM from "react-dom/client";
 import { Component } from "react";
 import ErrorBoundary from "src/elements/errorBoundary";
+import { UserProvider } from "src/elements/userContext";
 import apiEndpoints from "./api.endpoints";
 import App from "./app";
 
@@ -19,7 +20,9 @@ class AppContainer extends Component {
     return (
       // <StrictMode>
       <ErrorBoundary fallback={<h1>Something went wrong! Please try again later.</h1>}>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </ErrorBoundary>
       // <StrictMode />
     );
