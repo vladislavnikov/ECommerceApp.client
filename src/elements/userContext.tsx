@@ -1,10 +1,10 @@
-import { createContext, useState, useContext, ReactNode, useMemo } from "react";
+import { createContext, useState, useEffect, useContext, ReactNode, useMemo } from "react";
 
 interface UserContextType {
   currentUser: string | null;
   onAuthUser: (user: string | null) => void;
-  handleSignIn: (username: string, password: string) => void; // Added here
-  handleSignUp: (username: string, password: string) => void; // Added here
+  handleSignIn: (username: string, password: string) => void;
+  handleSignUp: (username: string, password: string) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -14,25 +14,35 @@ interface UserProviderProps {
 }
 
 export function UserProvider({ children }: UserProviderProps) {
-  const [currentUser, setCurrentUser] = useState<string | null>(null);
+  const [currentUser, setCurrentUser] = useState<string | null>(() => {
+    return localStorage.getItem("currentUser");
+  });
 
   const onAuthUser = (user: string | null) => {
     setCurrentUser(user);
   };
 
   const handleSignIn = (username: string) => {
-    console.log("Signing in user:", username); // Add API logic here
+    console.log("Signing in user:", username);
     setTimeout(() => {
-      onAuthUser(username); // Simulate setting the user
+      onAuthUser(username);
     }, 1000);
   };
 
   const handleSignUp = (username: string) => {
-    console.log("Signing up user:", username); // Add API logic here
+    console.log("Signing up user:", username);
     setTimeout(() => {
-      onAuthUser(username); // Simulate setting the user
+      onAuthUser(username);
     }, 1000);
   };
+
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem("currentUser", currentUser);
+    } else {
+      localStorage.removeItem("currentUser");
+    }
+  }, [currentUser]);
 
   const value = useMemo(
     () => ({
