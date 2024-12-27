@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, ReactNode, useMemo } from "react";
+import { fetchSignIn, searchGames } from "src/api/services/userService";
 
 export interface UserContextType {
   currentUser: string | null;
@@ -22,18 +23,26 @@ export function UserProvider({ children }: UserProviderProps) {
     setCurrentUser(user);
   };
 
-  const handleSignIn = (username: string) => {
-    console.log("Signing in user:", username);
-    setTimeout(() => {
+  const handleSignIn = async (username: string, password: string) => {
+    try {
+      const response = await fetchSignIn(username, password);
+      console.log("SignIn Response:", response);
       onAuthUser(username);
-    }, 1000);
+    } catch (error) {
+      console.error("SignIn failed:", error);
+      throw new Error("Failed to sign in. Please check your credentials.");
+    }
   };
 
-  const handleSignUp = (username: string) => {
-    console.log("Signing up user:", username);
-    setTimeout(() => {
+  const handleSignUp = async (username: string, password: string) => {
+    try {
+      const response = await searchGames(username, password);
+      console.log("SignUp Response:", response);
       onAuthUser(username);
-    }, 1000);
+    } catch (error) {
+      console.error("SignUp failed:", error);
+      throw new Error("Failed to sign up. Please try again.");
+    }
   };
 
   useEffect(() => {

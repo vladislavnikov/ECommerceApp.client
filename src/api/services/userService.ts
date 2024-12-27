@@ -1,51 +1,27 @@
-const API_URL = "http://localhost:8082/api/auth";
-
-export const signInApi = async (username: string, password: string) => {
-  try {
-    const response = await fetch(`${API_URL}/signin`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Sign In failed. Please check your credentials.");
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message || "Something went wrong during sign in.");
-    } else {
-      throw new Error("Something went wrong during sign in.");
-    }
+const apiRequest = async <T>(url: string, options?: RequestInit): Promise<T> => {
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw new Error(`Failed to fetch data from ${url}`);
   }
+  return response.json();
 };
 
-export const signUpApi = async (username: string, password: string) => {
-  try {
-    const response = await fetch(`${API_URL}/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, password }),
-    });
+export const fetchSignIn = (username: string, password: string): Promise<{ message: string }> => {
+  return apiRequest<{ message: string }>("/api/auth/signIn", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
+};
 
-    if (!response.ok) {
-      throw new Error("Sign Up failed. Please try again.");
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error: unknown) {
-    if (error instanceof Error) {
-      throw new Error(error.message || "Something went wrong during sign up.");
-    } else {
-      throw new Error("Something went wrong during sign up.");
-    }
-  }
+export const searchGames = (username: string, password: string): Promise<{ message: string }> => {
+  return apiRequest<{ message: string }>("/api/auth/signUp", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, password }),
+  });
 };
