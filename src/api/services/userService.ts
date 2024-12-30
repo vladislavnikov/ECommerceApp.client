@@ -1,3 +1,5 @@
+import { signInPath, signUpPath } from "src/constants/urls";
+
 const apiRequest = async <T>(url: string, options?: RequestInit): Promise<T> => {
   const response = await fetch(url, options);
   if (!response.ok) {
@@ -7,7 +9,7 @@ const apiRequest = async <T>(url: string, options?: RequestInit): Promise<T> => 
 };
 
 export const fetchSignIn = (username: string, password: string): Promise<{ message: string }> => {
-  return apiRequest<{ message: string }>("/api/auth/signIn", {
+  return apiRequest<{ message: string }>(signInPath, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +19,7 @@ export const fetchSignIn = (username: string, password: string): Promise<{ messa
 };
 
 export const searchGames = (username: string, password: string): Promise<{ message: string }> => {
-  return apiRequest<{ message: string }>("/api/auth/signUp", {
+  return apiRequest<{ message: string }>(signUpPath, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

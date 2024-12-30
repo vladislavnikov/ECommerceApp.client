@@ -1,3 +1,4 @@
+import { topProductsPath, searchUrl } from "src/constants/urls";
 import { Game } from "src/shared/models/game";
 
 const apiRequest = async <T>(url: string): Promise<T> => {
@@ -9,9 +10,9 @@ const apiRequest = async <T>(url: string): Promise<T> => {
 };
 
 export const fetchTopGames = (): Promise<Game[]> => {
-  return apiRequest<Game[]>("/api/products/top");
+  return apiRequest<Game[]>(topProductsPath);
 };
 
 export const searchGames = (text: string): Promise<Game[]> => {
-  return apiRequest<Game[]>(`/api/search?text=${text}`);
+  return apiRequest<Game[]>(searchUrl(text));
 };

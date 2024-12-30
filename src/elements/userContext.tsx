@@ -25,8 +25,7 @@ export function UserProvider({ children }: UserProviderProps) {
 
   const handleSignIn = async (username: string, password: string) => {
     try {
-      const response = await fetchSignIn(username, password);
-      console.log("SignIn Response:", response);
+      await fetchSignIn(username, password);
       onAuthUser(username);
     } catch (error) {
       console.error("SignIn failed:", error);
@@ -36,8 +35,7 @@ export function UserProvider({ children }: UserProviderProps) {
 
   const handleSignUp = async (username: string, password: string) => {
     try {
-      const response = await searchGames(username, password);
-      console.log("SignUp Response:", response);
+      await searchGames(username, password);
       onAuthUser(username);
     } catch (error) {
       console.error("SignUp failed:", error);
