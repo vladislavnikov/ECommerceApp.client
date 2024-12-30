@@ -6,9 +6,10 @@ import * as styles from "src/elements/modal.m.scss";
 
 interface SignInProps {
   onSubmit: (username: string, password: string) => void;
+  error?: string | null;
 }
 
-function SignIn({ onSubmit }: SignInProps) {
+function SignIn({ onSubmit, error }: SignInProps) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -58,6 +59,8 @@ function SignIn({ onSubmit }: SignInProps) {
         placeholder="Enter your password"
         icon={passIcon}
       />
+
+      {error && <div className={styles.errorMessage}>{error}</div>}
 
       <div className={styles.submitWrapper}>
         <button type="submit" className={styles.submitBtn} aria-label="Sign in button">

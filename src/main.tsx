@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import { Component } from "react";
 import ErrorBoundary from "src/elements/errorBoundary";
 import { UserProvider } from "src/elements/userContext";
-import apiEndpoints from "./api.endpoints";
+import { apiEndpoints } from "./api.endpoints";
 import App from "./app";
 
 async function testFetch(): Promise<void> {

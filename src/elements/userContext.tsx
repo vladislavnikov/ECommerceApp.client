@@ -25,8 +25,10 @@ export function UserProvider({ children }: UserProviderProps) {
 
   const handleSignIn = async (username: string, password: string) => {
     try {
-      await fetchSignIn(username, password);
+      const response = await fetchSignIn(username, password);
       onAuthUser(username);
+      console.log("SignIn successful:", response);
+      return response;
     } catch (error) {
       console.error("SignIn failed:", error);
       throw new Error("Failed to sign in. Please check your credentials.");

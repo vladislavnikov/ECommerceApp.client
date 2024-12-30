@@ -1,16 +1,9 @@
-import { topProductsPath, searchUrl } from "src/constants/urls";
+import { apiEndpoints, searchUrl } from "src/api.endpoints";
 import { Game } from "src/shared/models/game";
-
-const apiRequest = async <T>(url: string): Promise<T> => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to fetch data from ${url}`);
-  }
-  return response.json();
-};
+import apiRequest from "src/api/services/apiRequest";
 
 export const fetchTopGames = (): Promise<Game[]> => {
-  return apiRequest<Game[]>(topProductsPath);
+  return apiRequest<Game[]>(apiEndpoints.gamesMock);
 };
 
 export const searchGames = (text: string): Promise<Game[]> => {
