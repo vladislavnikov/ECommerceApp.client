@@ -1,9 +1,26 @@
-import { NavLink } from "react-router-dom";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import Dropdown from "src/components/header/dropdown";
 import { ROUTES, PRODUCT_ROUTES } from "src/constants/routes";
 import * as styles from "src/components/header/header.module.scss";
+import logOutImage from "src/assets/icons/logout.png";
+import userIcon from "src/assets/icons/user.png";
+import shoppingCard from "src/assets/icons/shoppingCart.png";
+import useUser from "src/shared/hooks/useUser";
+import SignInModal from "./modals/signInModal";
+import SignUpModal from "./modals/signUpModal";
 
 function Header() {
+  const [isSignInOpen, setSignInOpen] = useState(false);
+  const [isSignUpOpen, setSignUpOpen] = useState(false);
+  const { currentUser, onAuthUser } = useUser();
+  const navigate = useNavigate();
+
+  const handleSignOut = () => {
+    onAuthUser(null);
+    navigate("/");
+  };
+
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>Games Store</h1>
@@ -17,13 +34,37 @@ function Header() {
         <NavLink to={ROUTES.ABOUT} className={({ isActive }) => (isActive ? styles.active : "")}>
           About
         </NavLink>
-        <NavLink to={ROUTES.NOT_FOUND} className={({ isActive }) => (isActive ? styles.active : "")}>
-          Sign In
-        </NavLink>
-        <NavLink to={ROUTES.NOT_FOUND} className={({ isActive }) => (isActive ? styles.active : "")}>
-          Sign Up
-        </NavLink>
+
+        {currentUser ? (
+          <>
+            <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
+              <img src={shoppingCard} alt="Shopping Cart" />
+            </NavLink>
+            <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
+              <span className={styles.user}>
+                <img src={userIcon} alt="User Icon" />
+                {currentUser}
+              </span>
+            </NavLink>
+            <button className={styles.signOut} onClick={handleSignOut} type="button" aria-label="Sign out">
+              <img src={logOutImage} alt="Log Out" />
+            </button>
+          </>
+        ) : (
+          <>
+            <button className={styles.signIn} onClick={() => setSignInOpen(true)} type="button">
+              Sign In
+            </button>
+            <button className={styles.signUp} onClick={() => setSignUpOpen(true)} type="button">
+              Sign Up
+            </button>
+          </>
+        )}
       </nav>
+
+      <SignInModal isOpen={isSignInOpen} onClose={() => setSignInOpen(false)} />
+
+      <SignUpModal isOpen={isSignUpOpen} onClose={() => setSignUpOpen(false)} />
     </header>
   );
 }

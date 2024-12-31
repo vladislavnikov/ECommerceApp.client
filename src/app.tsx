@@ -4,6 +4,8 @@ import Footer from "./components/footer/footer";
 import Home from "./components/pages/home/home";
 import Products from "./components/pages/product";
 import About from "./components/pages/about";
+import Profile from "./components/pages/profile";
+import ProtectedRoute from "./routes/protectedRoute";
 
 function App() {
   return (
@@ -12,9 +14,38 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/products" element={<Products />} />
-          <Route path="/products/category/:category" element={<Products />} />
-          <Route path="/about" element={<About />} />
+          <Route
+            path="/products"
+            element={
+              <ProtectedRoute>
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/products/category/:category"
+            element={
+              <ProtectedRoute>
+                <Products />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/about"
+            element={
+              <ProtectedRoute>
+                <About />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </main>
