@@ -1,5 +1,5 @@
 import webpackMockServer from "webpack-mock-server";
-import { apiEndpoints, signInPath, signUpPath } from "./api.endpoints";
+import apiEndpoints from "./api.endpoints";
 
 const mockData = {
   id: 1,
@@ -55,7 +55,7 @@ export default webpackMockServer.add((app) => {
     res.json(results);
   });
 
-  app.post(signInPath, (req, res) => {
+  app.post(apiEndpoints.signInPath, (req, res) => {
     const { username, password } = req.body;
     if (username && password) {
       res.status(200).json({ message: "SignIn successful" });
@@ -64,7 +64,7 @@ export default webpackMockServer.add((app) => {
     }
   });
 
-  app.put(signUpPath, (req, res) => {
+  app.put(apiEndpoints.signUpPath, (req, res) => {
     const { username, password } = req.body;
     if (username && password) {
       res.status(201).json({ message: "SignUp successful" });

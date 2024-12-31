@@ -1,4 +1,4 @@
-import { apiEndpoints, searchUrl } from "src/api.endpoints";
+import apiEndpoints from "src/api.endpoints";
 import { Game } from "src/shared/models/game";
 import apiRequest from "src/api/services/apiRequest";
 
@@ -7,5 +7,5 @@ export const fetchTopGames = (): Promise<Game[]> => {
 };
 
 export const searchGames = (text: string): Promise<Game[]> => {
-  return apiRequest<Game[]>(searchUrl(text));
+  return apiRequest<Game[]>(apiEndpoints.searchUrl(text));
 };

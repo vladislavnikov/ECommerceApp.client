@@ -1,11 +1,10 @@
-export const apiEndpoints = {
+const apiEndpoints = {
   testMock: "/api/testMock",
   gamesMock: "/api/products/top",
   searchMock: "/api/search",
+  signInPath: "/api/auth/signIn",
+  signUpPath: "/api/auth/signUp",
+  searchUrl: (text: string) => `/api/search?text=${encodeURIComponent(text)}`,
 };
 
-export const signInPath = "/api/auth/signIn";
-
-export const signUpPath = "/api/auth/signUp";
-
-export const searchUrl = (text: string) => `/api/search?text=${text}`;
+export default apiEndpoints;
