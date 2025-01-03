@@ -6,6 +6,8 @@ const mockData = {
   firstName: "Will",
   lastName: "Smith",
   email: "willsmith321@gmail.com",
+  phoneNumber: "123-456-7890",
+  address: "123 Main Street, Springfield, USA",
 };
 
 const mockTopGames = [
@@ -70,6 +72,38 @@ export default webpackMockServer.add((app) => {
       res.status(201).json({ message: "SignUp successful" });
     } else {
       res.status(400).json({ message: "SignUp failed. Please try again." });
+    }
+  });
+
+  // user mocks
+  app.get(apiEndpoints.getProfile, (_req, res) => res.json(mockData));
+  app.post(apiEndpoints.saveProfile, (req, res) => {
+    const { firstName, lastName, email, phoneNumber, address } = req.body;
+
+    if (firstName && lastName && email && phoneNumber && address) {
+      mockData.firstName = firstName;
+      mockData.lastName = lastName;
+      mockData.email = email;
+      mockData.phoneNumber = phoneNumber;
+      mockData.address = address;
+
+      res.status(200).json({ message: "Profile saved successfully!" });
+    } else {
+      res.status(400).json({ message: "Failed to save profile. All fields are required." });
+    }
+  });
+
+  app.post(apiEndpoints.changePassword, (req, res) => {
+    const { oldPassword, newPassword, confirmPassword } = req.body;
+
+    if (newPassword === confirmPassword) {
+      if (oldPassword) {
+        res.status(200).json({ message: "Password changed successfully!" });
+      } else {
+        res.status(400).json({ message: "Old password is required." });
+      }
+    } else {
+      res.status(400).json({ message: "New password and confirm password do not match." });
     }
   });
 });
