@@ -1,10 +1,15 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import { fetchSignUp } from "src/api/services/userService";
+import { fetchSignIn, fetchSignUp } from "src/api/services/userService";
 
 interface UserState {
   currentUser: string | null;
   loading: boolean;
   error: string | null;
+}
+
+interface AuthPayload {
+  username: string;
+  password: string;
 }
 
 const initialState: UserState = {
@@ -13,27 +18,27 @@ const initialState: UserState = {
   error: null,
 };
 
-export const handleSignIn = createAsyncThunk("user/signIn", ({ username, password }: { username: string; password: string }) => {
-  if (username && password) {
+export const handleSignIn = createAsyncThunk("user/signIn", async ({ username, password }: AuthPayload) => {
+  try {
+    await fetchSignIn(username, password);
     return username;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Invalid credentials");
   }
-  throw new Error("Invalid credentials");
 });
 
-export const handleSignUp = createAsyncThunk(
-  "user/signUp",
-  async ({ username, password }: { username: string; password: string }, { rejectWithValue }) => {
-    try {
-      await fetchSignUp(username, password);
-      return username;
-    } catch (error) {
-      console.error(error);
-      return rejectWithValue("Failed to sign up. Please check your credentials.");
-    }
-  },
-);
+export const handleSignUp = createAsyncThunk("user/signUp", async ({ username, password }: AuthPayload, { rejectWithValue }) => {
+  try {
+    await fetchSignUp(username, password);
+    return username;
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue("Failed to sign up. Please check your credentials.");
+  }
+});
 
-const userSlice = createSlice({
+export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -76,5 +81,10 @@ const userSlice = createSlice({
   },
 });
 
-export const { logout } = userSlice.actions;
+export const UserActions = {
+  ...userSlice.actions,
+  handleSignIn,
+  handleSignUp,
+};
+
 export default userSlice.reducer;
