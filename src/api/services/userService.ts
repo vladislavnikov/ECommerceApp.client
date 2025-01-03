@@ -11,7 +11,7 @@ export const fetchSignIn = (username: string, password: string): Promise<{ messa
   });
 };
 
-export const searchGames = (username: string, password: string): Promise<{ message: string }> => {
+export const fetchSignUp = (username: string, password: string): Promise<{ message: string }> => {
   return apiRequest<{ message: string }>(apiEndpoints.signUpPath, {
     method: "PUT",
     headers: {

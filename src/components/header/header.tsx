@@ -1,23 +1,27 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Dropdown from "src/components/header/dropdown";
 import { ROUTES, PRODUCT_ROUTES } from "src/constants/routes";
 import * as styles from "src/components/header/header.module.scss";
 import logOutImage from "src/assets/icons/logout.png";
 import userIcon from "src/assets/icons/user.png";
 import shoppingCard from "src/assets/icons/shoppingCart.png";
-import useUser from "src/shared/hooks/useUser";
+import { RootState } from "src/redux/store/store";
+import { UserAction } from "src/redux/slices/userSlice";
 import SignInModal from "./modals/signInModal";
 import SignUpModal from "./modals/signUpModal";
 
 function Header() {
   const [isSignInOpen, setSignInOpen] = useState(false);
   const [isSignUpOpen, setSignUpOpen] = useState(false);
-  const { currentUser, onAuthUser } = useUser();
+
+  const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    onAuthUser(null);
+    dispatch(UserAction.logout());
     navigate("/");
   };
 

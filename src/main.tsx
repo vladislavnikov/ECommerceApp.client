@@ -2,7 +2,8 @@ import "./styles/main.scss";
 import ReactDOM from "react-dom/client";
 import { Component } from "react";
 import ErrorBoundary from "src/elements/errorBoundary";
-import { UserProvider } from "src/elements/userContext";
+import { Provider } from "react-redux";
+import store from "src/redux/store/store";
 import apiEndpoints from "./api.endpoints";
 import App from "./app";
 
@@ -20,9 +21,9 @@ class AppContainer extends Component {
     return (
       // <StrictMode>
       <ErrorBoundary fallback={<h1>Something went wrong! Please try again later.</h1>}>
-        <UserProvider>
+        <Provider store={store}>
           <App />
-        </UserProvider>
+        </Provider>
       </ErrorBoundary>
       // <StrictMode />
     );

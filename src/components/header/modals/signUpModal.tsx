@@ -1,6 +1,9 @@
 import Modal from "src/elements/modal";
 import SignUp from "src/components/header/modals/signUp";
-import useUser from "src/shared/hooks/useUser";
+import { useDispatch } from "react-redux";
+import { handleSignUp } from "@/redux/slices/userSlice";
+import { useState } from "react";
+import { AppDispatch } from "src/redux/store/store";
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -8,11 +11,22 @@ interface SignUpModalProps {
 }
 
 function SignUpModal({ isOpen, onClose }: SignUpModalProps) {
-  const { handleSignIn } = useUser();
+  const dispatch = useDispatch<AppDispatch>();
+  const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = (username: string, password: string) => {
-    handleSignIn(username, password);
-    onClose();
+  const handleSubmit = async (username: string, password: string) => {
+    try {
+      await dispatch(handleSignUp({ username, password })).unwrap();
+      onClose();
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message || "An unexpected error occurred.");
+        console.log(error);
+      } else {
+        setError("An unexpected error occurred.");
+        console.log(error);
+      }
+    }
   };
 
   return (
