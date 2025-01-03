@@ -1,15 +1,11 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchSignIn, fetchSignUp } from "src/api/services/userService";
+import { AuthPayload } from "@/shared/models/authPayload";
 
 interface UserState {
   currentUser: string | null;
   loading: boolean;
   error: string | null;
-}
-
-interface AuthPayload {
-  username: string;
-  password: string;
 }
 
 const initialState: UserState = {
@@ -81,7 +77,7 @@ export const userSlice = createSlice({
   },
 });
 
-export const UserActions = {
+export const UserAction = {
   ...userSlice.actions,
   handleSignIn,
   handleSignUp,

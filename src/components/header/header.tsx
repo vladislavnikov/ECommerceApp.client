@@ -8,7 +8,7 @@ import logOutImage from "src/assets/icons/logout.png";
 import userIcon from "src/assets/icons/user.png";
 import shoppingCard from "src/assets/icons/shoppingCart.png";
 import { RootState } from "src/redux/store/store";
-import { UserActions } from "src/redux/slices/userSlice";
+import { UserAction } from "src/redux/slices/userSlice";
 import SignInModal from "./modals/signInModal";
 import SignUpModal from "./modals/signUpModal";
 
@@ -21,7 +21,7 @@ function Header() {
   const navigate = useNavigate();
 
   const handleSignOut = () => {
-    dispatch(UserActions.logout());
+    dispatch(UserAction.logout());
     navigate("/");
   };
 
