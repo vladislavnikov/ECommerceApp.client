@@ -49,11 +49,14 @@ export const userSlice = createSlice({
         loading: true,
         error: null,
       }))
-      .addCase(handleSignIn.fulfilled, (state, action: PayloadAction<string>) => ({
-        ...state,
-        loading: false,
-        currentUser: action.payload,
-      }))
+      .addCase(handleSignIn.fulfilled, (state, action: PayloadAction<string>) => {
+        localStorage.setItem("currentUser", action.payload);
+        return {
+          ...state,
+          loading: false,
+          currentUser: action.payload,
+        };
+      })
       .addCase(handleSignIn.rejected, (state, action) => ({
         ...state,
         loading: false,
