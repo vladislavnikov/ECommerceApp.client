@@ -20,3 +20,36 @@ export const fetchSignUp = (username: string, password: string): Promise<{ messa
     body: JSON.stringify({ username, password }),
   });
 };
+
+export const changePassword = (oldPassword: string, newPassword: string): Promise<{ message: string }> => {
+  return apiRequest<{ message: string }>(apiEndpoints.changePassword, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ oldPassword, newPassword }),
+  });
+};
+
+export const saveUserChanges = async (profileData: {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  address: string;
+}): Promise<{ message: string }> => {
+  try {
+    const response = await apiRequest<{ message: string }>(apiEndpoints.saveProfile, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(profileData),
+    });
+    alert("Data changed successfully");
+    return response;
+  } catch (error) {
+    console.error("Error in saveUserChanges:", error);
+    throw new Error("Failed to save profile. Please try again.");
+  }
+};

@@ -93,17 +93,17 @@ export default webpackMockServer.add((app) => {
     }
   });
 
-  app.post(apiEndpoints.changePassword, (req, res) => {
-    const { oldPassword, newPassword, confirmPassword } = req.body;
+  app.put(apiEndpoints.changePassword, (req, res) => {
+    const { oldPassword, newPassword } = req.body;
 
-    if (newPassword === confirmPassword) {
-      if (oldPassword) {
-        res.status(200).json({ message: "Password changed successfully!" });
-      } else {
-        res.status(400).json({ message: "Old password is required." });
-      }
-    } else {
-      res.status(400).json({ message: "New password and confirm password do not match." });
+    if (!oldPassword) {
+      return res.status(400).json({ message: "Old password is required." });
     }
+
+    if (!newPassword) {
+      return res.status(400).json({ message: "New password is required." });
+    }
+
+    return res.status(200).json({ message: "Password changed successfully!" });
   });
 });
