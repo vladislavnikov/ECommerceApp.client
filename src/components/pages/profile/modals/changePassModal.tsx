@@ -14,17 +14,15 @@ function ChangePassModal({ isOpen, onClose }: ChangePassModalProps) {
   const dispatch = useDispatch<AppDispatch>();
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (oldPassword: string, newPassword: string) => {
+  const handleSubmit = async (newPassword: string, repeatNewPassword: string) => {
     try {
-      await dispatch(handleChangePassword({ oldPassword, newPassword })).unwrap();
+      await dispatch(handleChangePassword({ newPassword, repeatNewPassword })).unwrap();
       onClose();
     } catch (err) {
       if (err instanceof Error) {
         setError(err.message || "An unexpected error occurred.");
-        console.log(err.message);
       } else {
         setError("An unexpected error occurred.");
-        console.log(err);
       }
     }
   };

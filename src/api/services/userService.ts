@@ -21,13 +21,13 @@ export const fetchSignUp = (username: string, password: string): Promise<{ messa
   });
 };
 
-export const changePassword = (oldPassword: string, newPassword: string): Promise<{ message: string }> => {
+export const changePassword = (newPassword: string, repeatNewPassword: string): Promise<{ message: string }> => {
   return apiRequest<{ message: string }>(apiEndpoints.changePassword, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ oldPassword, newPassword }),
+    body: JSON.stringify({ newPassword, repeatNewPassword }),
   });
 };
 

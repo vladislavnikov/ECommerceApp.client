@@ -38,11 +38,11 @@ export const handleSignUp = createAsyncThunk("user/signUp", async ({ username, p
 
 export const handleChangePassword = createAsyncThunk<
   { message: string },
-  { oldPassword: string; newPassword: string },
+  { newPassword: string; repeatNewPassword: string },
   { rejectValue: string }
->("user/changePassword", async ({ oldPassword, newPassword }, { rejectWithValue }) => {
+>("user/changePassword", async ({ newPassword, repeatNewPassword }, { rejectWithValue }) => {
   try {
-    const response = await changePassword(oldPassword, newPassword);
+    const response = await changePassword(newPassword, repeatNewPassword);
     return response;
   } catch (error: unknown) {
     console.error(error);
@@ -58,6 +58,7 @@ export const userSlice = createSlice({
       return { ...state, currentUser: null };
     },
     updateUsername(state, action: PayloadAction<string>) {
+      localStorage.setItem("currentUser", action.payload);
       return {
         ...state,
         currentUser: action.payload,

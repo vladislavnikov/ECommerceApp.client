@@ -1,5 +1,10 @@
-import { ChangeEvent, FormEvent } from "react";
+import { useState } from "react";
 import * as styles from "src/components/pages/profile/profile.m.scss";
+import { saveUserChanges } from "src/api/services/userService";
+import { useDispatch } from "react-redux";
+import { UserAction } from "@/redux/slices/userSlice";
+import ChangePassModal from "src/components/pages/profile/modals/changePassModal";
+import { validateUsername, validateDescription, validateAddress, validatePhoneNumber } from "@/validators/profileValidations";
 import idCardIcon from "src/assets/icons/idCard.png";
 import noPhoto from "src/assets/noPhoto.jpg";
 import { WUPTextControl, WUPTextareaControl } from "web-ui-pack";
@@ -7,40 +12,89 @@ import { WUPTextControl, WUPTextareaControl } from "web-ui-pack";
 WUPTextControl.$use();
 WUPTextareaControl.$use();
 
-type ProfileFormProps = {
+interface Errors {
   username: string;
   description: string;
   defaultAddressDelivery: string;
   phoneNumber: string;
-  errors: {
-    username: string;
-    description: string;
-    defaultAddressDelivery: string;
-    phoneNumber: string;
-  };
-  onUsernameChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onDescriptionChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
-  onAddressChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onPhoneChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onSave: (e: FormEvent) => void;
-  onChangePassword: () => void;
-};
+}
 
-function ProfileForm({
-  username,
-  description,
-  defaultAddressDelivery,
-  phoneNumber,
-  errors,
-  onUsernameChange,
-  onDescriptionChange,
-  onAddressChange,
-  onPhoneChange,
-  onSave,
-  onChangePassword,
-}: ProfileFormProps) {
+function ProfileModal() {
+  const [errors, setErrors] = useState<Errors>({
+    username: "",
+    description: "",
+    defaultAddressDelivery: "",
+    phoneNumber: "",
+  });
+
+  const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const dispatch = useDispatch();
+
+  const handleSave = async (e: CustomEvent) => {
+    e.preventDefault();
+
+    const { username, description, defaultAddressDelivery, phoneNumber } = e.detail.model;
+
+    const usernameError = validateUsername(username);
+    const descriptionError = validateDescription(description);
+    const addressError = validateAddress(defaultAddressDelivery);
+    const phoneError = validatePhoneNumber(phoneNumber);
+
+    if (usernameError || descriptionError || addressError || phoneError) {
+      setErrors({
+        username: usernameError || "",
+        description: descriptionError || "",
+        defaultAddressDelivery: addressError || "",
+        phoneNumber: phoneError || "",
+      });
+      return;
+    }
+
+    setErrors({
+      username: "",
+      description: "",
+      defaultAddressDelivery: "",
+      phoneNumber: "",
+    });
+
+    try {
+      setLoading(true);
+      setSuccessMessage(null);
+
+      const response = await saveUserChanges({
+        firstName: username,
+        lastName: "OptionalLastName",
+        email: "OptionalEmail",
+        phoneNumber,
+        address: defaultAddressDelivery,
+      });
+
+      setSuccessMessage(response.message);
+      dispatch(UserAction.updateUsername(username));
+    } catch {
+      alert("Failed to save profile. Please try again.");
+    } finally {
+      setLoading(false);
+      localStorage.setItem("currentUser", username);
+    }
+  };
+
   return (
-    <wup-form class={styles.profileForm} w-onSubmit={onSave}>
+    <wup-form
+      class={styles.profileForm}
+      ref={(instance): void => {
+        if (instance) {
+          // eslint-disable-next-line no-param-reassign
+          instance.$onSubmit = (e: CustomEvent) => {
+            console.log("onSubmit", e.detail.model);
+            handleSave(e);
+          };
+        }
+      }}
+    >
       <div className={styles.container}>
         <div className={styles.row}>
           <div className={styles.profileImageSection}>
@@ -54,36 +108,32 @@ function ProfileForm({
             <p>Username</p>
             <wup-text
               w-type="text"
-              w-value={username}
+              w-name="username"
               w-placeholder="Enter your username"
-              w-oninput={onUsernameChange}
               w-errorText={errors.username}
               w-icon={idCardIcon}
               class={styles.inputControl}
             />
             <p>Description</p>
             <wup-textarea
-              w-value={description}
+              w-name="description"
               w-placeholder="Enter your profile description"
-              w-oninput={onDescriptionChange}
               w-errorText={errors.description}
               class={styles.textareaControl}
             />
             <p>Default Address Delivery</p>
             <wup-text
               w-type="text"
-              w-value={defaultAddressDelivery}
+              w-name="defaultAddressDelivery"
               w-placeholder="Enter your delivery address"
-              w-oninput={onAddressChange}
               w-errorText={errors.defaultAddressDelivery}
               class={styles.inputControl}
             />
             <p>Phone Number</p>
             <wup-text
               w-type="text"
-              w-value={phoneNumber}
+              w-name="phoneNumber"
               w-placeholder="Enter your phone number"
-              w-oninput={onPhoneChange}
               w-errorText={errors.phoneNumber}
               class={styles.inputControl}
             />
@@ -93,14 +143,19 @@ function ProfileForm({
             <button type="submit" className={styles.saveButton}>
               Save Profile
             </button>
-            <button type="button" className={styles.changePasswordButton} onClick={onChangePassword}>
+            <button type="button" className={styles.changePasswordButton} onClick={() => setIsChangePassModalOpen(true)}>
               Change Password
             </button>
           </div>
         </div>
       </div>
+
+      {loading && <p>Saving profile...</p>}
+      {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
+
+      {isChangePassModalOpen && <ChangePassModal isOpen={isChangePassModalOpen} onClose={() => setIsChangePassModalOpen(false)} />}
     </wup-form>
   );
 }
 
-export default ProfileForm;
+export default ProfileModal;

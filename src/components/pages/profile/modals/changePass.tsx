@@ -5,34 +5,39 @@ import * as styles from "src/elements/modal.m.scss";
 import { validatePassword } from "@/validators/profileValidations";
 
 interface ChangePassProps {
-  onSubmit: (password: string, repeatPasswordError: string) => void;
+  onSubmit: (newPassword: string, repeatNewPassword: string) => void;
   error?: string | null;
 }
 
 function ChangePass({ onSubmit, error }: ChangePassProps) {
-  const [password, setOldPassword] = useState("");
-  const [repeatPassword, setNewPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [repeatNewPassword, setRepeatNewPassword] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const passwordError = validatePassword(password);
-    const repeatPasswordError = validatePassword(repeatPassword);
+    const newPasswordError = validatePassword(newPassword);
+    const repeatNewPasswordError = validatePassword(repeatNewPassword);
 
-    if (passwordError || repeatPasswordError) {
+    if (newPasswordError || repeatNewPasswordError) {
       return;
     }
 
-    onSubmit(password, repeatPassword);
+    if (newPassword !== repeatNewPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    onSubmit(newPassword, repeatNewPassword);
   };
 
   return (
     <form onSubmit={handleSubmit} className={styles.loginForm}>
       <InputText
         type="password"
-        label=" Password"
-        value={password}
-        onChange={setOldPassword}
+        label="New Password"
+        value={newPassword}
+        onChange={setNewPassword}
         validate={validatePassword}
         required
         placeholder=""
@@ -41,9 +46,9 @@ function ChangePass({ onSubmit, error }: ChangePassProps) {
 
       <InputText
         type="password"
-        label="Repeat Password"
-        value={repeatPassword}
-        onChange={setNewPassword}
+        label="Repeat New Password"
+        value={repeatNewPassword}
+        onChange={setRepeatNewPassword}
         validate={validatePassword}
         required
         placeholder=""

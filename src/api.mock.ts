@@ -75,7 +75,6 @@ export default webpackMockServer.add((app) => {
     }
   });
 
-  // user mocks
   app.get(apiEndpoints.getProfile, (_req, res) => res.json(mockData));
   app.post(apiEndpoints.saveProfile, (req, res) => {
     const { firstName, lastName, email, phoneNumber, address } = req.body;
@@ -94,14 +93,18 @@ export default webpackMockServer.add((app) => {
   });
 
   app.put(apiEndpoints.changePassword, (req, res) => {
-    const { oldPassword, newPassword } = req.body;
-
-    if (!oldPassword) {
-      return res.status(400).json({ message: "Old password is required." });
-    }
+    const { newPassword, repeatNewPassword } = req.body;
 
     if (!newPassword) {
       return res.status(400).json({ message: "New password is required." });
+    }
+
+    if (!repeatNewPassword) {
+      return res.status(400).json({ message: "Repeat new password is required." });
+    }
+
+    if (newPassword !== repeatNewPassword) {
+      return res.status(400).json({ message: "Passwords do not match." });
     }
 
     return res.status(200).json({ message: "Password changed successfully!" });
