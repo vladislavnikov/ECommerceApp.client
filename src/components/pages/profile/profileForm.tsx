@@ -38,10 +38,10 @@ function ProfileModal() {
 
     const { username, description, defaultAddressDelivery, phoneNumber } = e.detail.model;
 
-    const usernameError = validateUsername(username);
-    const descriptionError = validateDescription(description);
-    const addressError = validateAddress(defaultAddressDelivery);
-    const phoneError = validatePhoneNumber(phoneNumber);
+    const usernameError = validateUsername(username || "");
+    const descriptionError = validateDescription(description || "");
+    const addressError = validateAddress(defaultAddressDelivery || "");
+    const phoneError = validatePhoneNumber(phoneNumber || "");
 
     if (usernameError || descriptionError || addressError || phoneError) {
       setErrors({
