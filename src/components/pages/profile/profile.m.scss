@@ -47,6 +47,12 @@
   flex: 1;
   text-align: center;
 
+  .profileImage {
+    width: 300px;
+    height: 400px;
+    background-color: #ccc;
+  }
+
   img {
     width: 300px;
     height: 350px;
@@ -215,4 +221,10 @@ p {
   color: #4caf50;
   font-size: 14px;
   margin-top: 10px;
+}
+
+.errorText {
+  color: red;
+  font-size: 12px;
+  margin-top: 4px;
 }

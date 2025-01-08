@@ -9,7 +9,6 @@ export const validatePassword = (value: string) => {
 };
 
 export function validateAddress(address: string): string | null {
-  console.log(address);
   if (!address) {
     return "Address is required.";
   }
@@ -23,7 +22,6 @@ export function validateAddress(address: string): string | null {
 }
 
 export function validatePhoneNumber(phoneNumber: string): string | null {
-  console.log(phoneNumber);
   if (!phoneNumber) {
     return "Phone number is required.";
   }
