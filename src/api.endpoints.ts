@@ -9,6 +9,7 @@ const apiEndpoints = {
   saveProfile: "/api/saveProfile",
   changePassword: "/api/changePassword",
   uploadProfileImage: "/api/uploadProfileImage",
+  getProducts: "/api/products",
 };
 
 export default apiEndpoints;
