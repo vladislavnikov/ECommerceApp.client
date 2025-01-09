@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import * as styles from "src/components/pages/profile/profile.m.scss";
 import { saveUserChanges, getUserProfile, uploadProfileImage } from "src/api/services/userService";
-import ChangePassModal from "src/components/pages/profile/modals/changePassModal";
+import ChangePassModal from "@/components/pages/profile/modals/changePasswordModal";
 import { validateUsername, validateDescription, validateAddress, validatePhoneNumber } from "@/validators/profileValidations";
 import idCardIcon from "src/assets/icons/idCard.png";
 import noPhoto from "src/assets/noPhoto.jpg";
@@ -38,6 +38,7 @@ function ProfileModal() {
 
   const [userData, setUserData] = useState<UserProfile>({
     id: 0,
+    username: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -106,7 +107,8 @@ function ProfileModal() {
 
       const updatedUser: UserProfile = {
         id: userData.id,
-        firstName: username,
+        username,
+        firstName: userData.firstName,
         lastName: userData.lastName,
         email: userData.email,
         description,
@@ -180,7 +182,7 @@ function ProfileModal() {
               w-errorText={errors.username}
               w-icon={idCardIcon}
               class={styles.inputControl}
-              w-initValue={userData.firstName}
+              w-initValue={userData.username}
               w-required
             />
             {errors.username && <span className={styles.errorText}>{errors.username}</span>}

@@ -34,7 +34,8 @@ export const handleSignIn = createAsyncThunk("user/signIn", async ({ username, p
 
     const userProfile: UserProfile = {
       id: -1,
-      firstName: username,
+      username,
+      firstName: "",
       lastName: "",
       email: "",
       description: "",
@@ -57,7 +58,8 @@ export const handleSignUp = createAsyncThunk("user/signUp", async ({ username, p
 
     const userProfile: UserProfile = {
       id: -1,
-      firstName: username,
+      username,
+      firstName: "",
       lastName: "",
       email: "",
       description: "",

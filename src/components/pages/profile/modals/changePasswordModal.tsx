@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Modal from "src/elements/modal";
-import ChangePass from "src/components/pages/profile/modals/changePass";
+import ChangePass from "@/components/pages/profile/modals/changePassword";
 import { useDispatch } from "react-redux";
 import { handleChangePassword } from "@/redux/slices/userSlice";
 import { AppDispatch } from "src/redux/store/store";

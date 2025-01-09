@@ -3,6 +3,7 @@ import apiEndpoints from "./api.endpoints";
 
 const mockData = {
   id: 1,
+  username: "wills",
   firstName: "Will",
   lastName: "Smith",
   email: "willsmith321@gmail.com",
@@ -111,5 +112,13 @@ export default webpackMockServer.add((app) => {
     }
 
     return res.status(200).json({ message: "Password changed successfully!" });
+  });
+
+  app.post(apiEndpoints.uploadProfileImage, (_req, res) => {
+    setTimeout(() => {
+      res.status(200).json({
+        imageUrl: "https://via.placeholder.com/150",
+      });
+    }, 1000);
   });
 });
