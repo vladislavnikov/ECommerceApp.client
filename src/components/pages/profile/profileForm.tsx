@@ -30,7 +30,6 @@ function ProfileModal() {
 
   const [isChangePassModalOpen, setIsChangePassModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [profileImage, setProfileImage] = useState<string | null>(null);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -48,26 +47,21 @@ function ProfileModal() {
     profileImage: "",
   });
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const response = await getUserProfile();
-        setUserData({
-          id: response.id,
-          firstName: response.firstName,
-          lastName: response.lastName,
-          email: response.email,
-          description: response.description,
-          phoneNumber: response.phoneNumber,
-          address: response.address,
-          profileImage: response.profileImage || noPhoto,
-        });
-        setProfileImage(response.profileImage || noPhoto);
-      } catch (error) {
-        console.error("Error fetching user profile:", error);
-      }
-    };
+  const fetchUserProfile = async () => {
+    try {
+      const response = await getUserProfile();
+      setUserData({
+        ...response,
+      });
+      setProfileImage(response.profileImage || noPhoto);
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+    }
+  };
 
+  useEffect(() => {}, [userData]);
+
+  useEffect(() => {
     fetchUserProfile();
   }, []);
 
@@ -100,7 +94,15 @@ function ProfileModal() {
 
     try {
       setLoading(true);
-      setSuccessMessage(null);
+
+      let uploadedImageUrl = "";
+      if (fileInputRef.current?.files?.[0]) {
+        const formData = new FormData();
+        formData.append("file", fileInputRef.current.files[0]);
+
+        const imageResponse = await uploadProfileImage(formData);
+        uploadedImageUrl = imageResponse.imageUrl;
+      }
 
       const updatedUser: UserProfile = {
         id: userData.id,
@@ -110,14 +112,14 @@ function ProfileModal() {
         description,
         phoneNumber,
         address: defaultAddressDelivery,
-        profileImage: "",
+        profileImage: uploadedImageUrl || userData.profileImage,
       };
 
       await saveUserChanges(updatedUser);
       dispatch(UserAction.updateUserProfile(updatedUser));
       localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-      setSuccessMessage("Profile updated successfully!");
-    } catch {
+    } catch (error) {
+      console.error("Error saving profile:", error);
       alert("Failed to save profile. Please try again.");
     } finally {
       setLoading(false);
@@ -175,22 +177,21 @@ function ProfileModal() {
             <wup-text
               w-type="text"
               w-name="username"
-              w-placeholder="Enter your username"
               w-errorText={errors.username}
               w-icon={idCardIcon}
               class={styles.inputControl}
-              w-value={userData.firstName}
+              w-initValue={userData.firstName}
               w-required
             />
             {errors.username && <span className={styles.errorText}>{errors.username}</span>}
 
             <p>Description</p>
             <wup-textarea
+              w-type="text"
               w-name="description"
-              w-placeholder="Enter your profile description"
               w-errorText={errors.description}
               class={styles.textareaControl}
-              w-value={userData.description}
+              w-initValue={userData.description}
               w-required
             />
             {errors.description && <span className={styles.errorText}>{errors.description}</span>}
@@ -199,10 +200,9 @@ function ProfileModal() {
             <wup-text
               w-type="text"
               w-name="defaultAddressDelivery"
-              w-placeholder="Enter your delivery address"
               w-errorText={errors.defaultAddressDelivery}
               class={styles.inputControl}
-              w-value={userData.address}
+              w-initValue={userData.address}
               w-required
             />
             {errors.defaultAddressDelivery && <span className={styles.errorText}>{errors.defaultAddressDelivery}</span>}
@@ -211,10 +211,9 @@ function ProfileModal() {
             <wup-text
               w-type="text"
               w-name="phoneNumber"
-              w-placeholder="Enter your phone number"
               w-errorText={errors.phoneNumber}
               class={styles.inputControl}
-              w-value={userData.phoneNumber}
+              w-initValue={userData.phoneNumber}
               w-required
             />
             {errors.phoneNumber && <span className={styles.errorText}>{errors.phoneNumber}</span>}
@@ -232,7 +231,6 @@ function ProfileModal() {
       </div>
 
       {loading && <p>Saving profile...</p>}
-      {successMessage && <p className={styles.successMessage}>{successMessage}</p>}
 
       {isChangePassModalOpen && <ChangePassModal isOpen={isChangePassModalOpen} onClose={() => setIsChangePassModalOpen(false)} />}
     </wup-form>

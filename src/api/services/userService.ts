@@ -1,8 +1,9 @@
 import apiEndpoints from "src/api.endpoints";
 import apiRequest from "src/api/services/apiRequest";
 import { UserProfile } from "@/shared/models/userProfile";
+import { AuthPayload } from "@/shared/models/authPayload";
 
-export const fetchSignIn = (username: string, password: string): Promise<UserProfile & { username: string }> => {
+export const fetchSignIn = ({ username, password }: AuthPayload): Promise<UserProfile & { username: string }> => {
   return apiRequest<UserProfile & { username: string }>(apiEndpoints.signInPath, {
     method: "POST",
     headers: {
@@ -12,7 +13,7 @@ export const fetchSignIn = (username: string, password: string): Promise<UserPro
   });
 };
 
-export const fetchSignUp = (username: string, password: string): Promise<UserProfile & { username: string }> => {
+export const fetchSignUp = ({ username, password }: AuthPayload): Promise<UserProfile & { username: string }> => {
   return apiRequest<UserProfile & { username: string }>(apiEndpoints.signUpPath, {
     method: "PUT",
     headers: {
@@ -32,13 +33,7 @@ export const changePassword = (newPassword: string, repeatNewPassword: string): 
   });
 };
 
-export const saveUserChanges = async (profileData: {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phoneNumber: string;
-  address: string;
-}): Promise<UserProfile> => {
+export const saveUserChanges = async (profileData: Partial<UserProfile>): Promise<UserProfile> => {
   try {
     const response = await apiRequest<UserProfile>(apiEndpoints.saveProfile, {
       method: "POST",
@@ -63,6 +58,7 @@ export const getUserProfile = async (): Promise<UserProfile> => {
         "Content-Type": "application/json",
       },
     });
+    console.log(response);
     return response;
   } catch (error) {
     console.error("Error in getUserProfile:", error);
@@ -70,8 +66,8 @@ export const getUserProfile = async (): Promise<UserProfile> => {
   }
 };
 
-export const uploadProfileImage = (formData: FormData): Promise<unknown> => {
-  return apiRequest<unknown>(apiEndpoints.uploadProfileImage, {
+export const uploadProfileImage = (formData: FormData): Promise<{ imageUrl: string }> => {
+  return apiRequest<{ imageUrl: string }>(apiEndpoints.uploadProfileImage, {
     method: "POST",
     body: formData,
   });

@@ -7,7 +7,9 @@ const mockData = {
   lastName: "Smith",
   email: "willsmith321@gmail.com",
   phoneNumber: "123-456-7890",
+  description: "Test desc",
   address: "123 Main Street, Springfield, USA",
+  profileImage: "src/assets/icons/resetPassword.svg",
 };
 
 const mockTopGames = [
@@ -76,6 +78,7 @@ export default webpackMockServer.add((app) => {
   });
 
   app.get(apiEndpoints.getProfile, (_req, res) => res.json(mockData));
+
   app.post(apiEndpoints.saveProfile, (req, res) => {
     const { firstName, lastName, email, phoneNumber, address } = req.body;
 

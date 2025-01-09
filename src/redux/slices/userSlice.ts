@@ -30,7 +30,7 @@ const initialState: UserState = {
 
 export const handleSignIn = createAsyncThunk("user/signIn", async ({ username, password }: AuthPayload, { rejectWithValue }) => {
   try {
-    await fetchSignIn(username, password);
+    await fetchSignIn({ username, password });
 
     const userProfile: UserProfile = {
       id: -1,
@@ -53,7 +53,7 @@ export const handleSignIn = createAsyncThunk("user/signIn", async ({ username, p
 
 export const handleSignUp = createAsyncThunk("user/signUp", async ({ username, password }: AuthPayload, { rejectWithValue }) => {
   try {
-    await fetchSignUp(username, password);
+    await fetchSignUp({ username, password });
 
     const userProfile: UserProfile = {
       id: -1,
