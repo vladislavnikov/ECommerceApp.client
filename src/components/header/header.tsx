@@ -47,7 +47,7 @@ function Header() {
             <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
               <span className={styles.user}>
                 <img src={userIcon} alt="User Icon" />
-                {currentUser}
+                {currentUser.username}
               </span>
             </NavLink>
             <button className={styles.signOut} onClick={handleSignOut} type="button" aria-label="Sign out">

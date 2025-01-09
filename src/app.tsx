@@ -4,7 +4,7 @@ import Footer from "./components/footer/footer";
 import Home from "./components/pages/home/home";
 import Products from "./components/pages/product";
 import About from "./components/pages/about";
-import Profile from "./components/pages/profile";
+import Profile from "./components/pages/profile/profile";
 import ProtectedRoute from "./routes/protectedRoute";
 
 function App() {

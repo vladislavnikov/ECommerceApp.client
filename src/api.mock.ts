@@ -3,9 +3,14 @@ import apiEndpoints from "./api.endpoints";
 
 const mockData = {
   id: 1,
+  username: "wills",
   firstName: "Will",
   lastName: "Smith",
   email: "willsmith321@gmail.com",
+  phoneNumber: "123-456-7890",
+  description: "Test desc",
+  address: "123 Main Street, Springfield, USA",
+  profileImage: "src/assets/icons/resetPassword.svg",
 };
 
 const mockTopGames = [
@@ -71,5 +76,49 @@ export default webpackMockServer.add((app) => {
     } else {
       res.status(400).json({ message: "SignUp failed. Please try again." });
     }
+  });
+
+  app.get(apiEndpoints.getProfile, (_req, res) => res.json(mockData));
+
+  app.post(apiEndpoints.saveProfile, (req, res) => {
+    const { firstName, lastName, email, phoneNumber, address } = req.body;
+
+    if (firstName && lastName && email && phoneNumber && address) {
+      mockData.firstName = firstName;
+      mockData.lastName = lastName;
+      mockData.email = email;
+      mockData.phoneNumber = phoneNumber;
+      mockData.address = address;
+
+      res.status(200).json({ message: "Profile saved successfully!" });
+    } else {
+      res.status(400).json({ message: "Failed to save profile. All fields are required." });
+    }
+  });
+
+  app.put(apiEndpoints.changePassword, (req, res) => {
+    const { newPassword, repeatNewPassword } = req.body;
+
+    if (!newPassword) {
+      return res.status(400).json({ message: "New password is required." });
+    }
+
+    if (!repeatNewPassword) {
+      return res.status(400).json({ message: "Repeat new password is required." });
+    }
+
+    if (newPassword !== repeatNewPassword) {
+      return res.status(400).json({ message: "Passwords do not match." });
+    }
+
+    return res.status(200).json({ message: "Password changed successfully!" });
+  });
+
+  app.post(apiEndpoints.uploadProfileImage, (_req, res) => {
+    setTimeout(() => {
+      res.status(200).json({
+        imageUrl: "https://via.placeholder.com/150",
+      });
+    }, 1000);
   });
 });

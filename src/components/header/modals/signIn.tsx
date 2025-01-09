@@ -70,5 +70,4 @@ function SignIn({ onSubmit, error }: SignInProps) {
     </form>
   );
 }
-
 export default SignIn;
