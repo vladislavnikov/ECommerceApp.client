@@ -1,0 +1,24 @@
+.wrapper {
+  margin: 10px;
+  width: 70%;
+
+  .container {
+    margin-top: 10px;
+    padding: 5px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+
+    h2 {
+      font-size: 24px;
+      border-bottom: 1px solid white;
+      padding: 5px 5px 5px 10px;
+      margin: 0 10px;
+    }
+
+    .gamesContainer {
+      padding: 10px;
+      display: flex;
+      gap: 15px;
+    }
+  }
+}
