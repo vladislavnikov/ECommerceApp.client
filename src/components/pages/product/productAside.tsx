@@ -1,72 +1,75 @@
-import { useParams } from "react-router-dom";
+import { sortingParams } from "@/shared/models/sortingParams";
+import { ChangeEvent } from "react";
 import * as styles from "src/components/pages/product/productAside.module.scss";
 
-function ProductAside() {
-  const { category } = useParams();
+interface ProductAsideProps {
+  filters: sortingParams;
+  setFilters: React.Dispatch<React.SetStateAction<sortingParams>>;
+}
+
+function ProductAside({ filters, setFilters }: ProductAsideProps) {
+  const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
+    const { name, value } = e.target;
+
+    setFilters((prev: sortingParams) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
 
   return (
     <aside className={styles.filterContainer}>
-      <h2>{category}</h2>
+      <h2>{filters.category || "All Categories"}</h2>
 
       <h3>Sort</h3>
       <div className={styles.filterSection}>
         <div className={styles.sortSection}>
           <span>Criteria</span>
-          <select>
-            <option>Name</option>
-            <option>Price</option>
-            <option>Rating</option>
+          <select name="sortType" value={filters.sortType || ""} onChange={handleChange}>
+            <option value="">Select</option>
+            <option value="title">Name</option>
+            <option value="price">Price</option>
+            <option value="rating">Rating</option>
           </select>
         </div>
         <div className={styles.sortSection}>
           <span>Type</span>
-          <select>
-            <option>Ascending</option>
-            <option>Descending</option>
+          <select name="sortDir" value={filters.sortDir || ""} onChange={handleChange}>
+            <option value="">Select</option>
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
           </select>
         </div>
       </div>
       <h3>Genres</h3>
       <div className={styles.filterSection}>
-        <span>
-          <input type="radio" value="All genres" />
-          All genres
-        </span>
-        <span>
-          <input type="radio" value="Shooter" />
-          Shooter
-        </span>
-        <span>
-          <input type="radio" value="Arcade" />
-          Arcade
-        </span>
-        <span>
-          <input type="radio" value="Survive" />
-          Survive
-        </span>
+        {["All genres", "Shooter", "Arcade", "Survive"].map((genre) => (
+          <span key={genre}>
+            <input
+              type="radio"
+              name="genre"
+              value={genre === "All genres" ? "" : genre.toLowerCase()}
+              checked={filters.genre === genre.toLowerCase()}
+              onChange={handleChange}
+            />
+            {genre}
+          </span>
+        ))}
       </div>
       <h3>Age</h3>
       <div className={styles.filterSection}>
-        <span>
-          <input type="radio" value="All ages" />
-          All ages
-        </span>
-        <span>
-          <input type="radio" value="3+" />
-          3+
-        </span>
-        <span>
-          <input type="radio" value="6+" />
-          6+
-        </span>
-        <span>
-          <input type="radio" value="12+" />
-          12+
-        </span>
-        <span>
-          <input type="radio" value="18+" />
-          18+
-        </span>
+        {["All ages", "3+", "6+", "12+", "18+"].map((age) => (
+          <span key={age}>
+            <input
+              type="radio"
+              name="ageRating"
+              value={age === "All ages" ? "" : age}
+              checked={filters.ageRating === age}
+              onChange={handleChange}
+            />
+            {age}
+          </span>
+        ))}
       </div>
     </aside>
   );

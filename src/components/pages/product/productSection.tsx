@@ -1,43 +1,63 @@
 import { useState, useEffect } from "react";
 import { Game } from "src/shared/models/game";
-import { fetchTopGames } from "src/api/services/gameService";
-import SearchBar from "../home/searchBar/searchBar";
+import { getProducts } from "@/api/services/gameService";
+import { sortingParams } from "@/shared/models/sortingParams";
+import useSpinner from "@/helpers/hooks/useSpinner";
+import WUPSpinElement from "web-ui-pack/spinElement";
+import ProductSearchBar from "src/elements/productSearchBar";
 import * as styles from "./productSection.module.scss";
 import GameCard from "../home/card/card";
 
-function ProductSection() {
+WUPSpinElement.$use();
+
+function ProductSection({ filters }: { filters: sortingParams }) {
   const [games, setGames] = useState<Game[]>([]);
+  const [filteredGames, setFilteredGames] = useState<Game[]>([]);
+  const { loading, showSpinner, hideSpinner } = useSpinner();
 
   useEffect(() => {
     const loadGames = async () => {
+      showSpinner();
+
       try {
-        const data = await fetchTopGames();
+        const data = await getProducts(filters);
 
-        const sortedGames = data.sort((a: Game, b: Game) => {
-          const dateA = new Date(a.releaseDate).getTime();
-          const dateB = new Date(b.releaseDate).getTime();
-          return dateB - dateA;
-        });
-
-        setGames(sortedGames.slice(0, 3));
+        setGames(data);
+        setFilteredGames(data);
       } catch (err) {
         console.error("Error fetching games:", err);
+      } finally {
+        hideSpinner();
       }
     };
 
     loadGames();
-  }, []);
+  }, [filters, showSpinner, hideSpinner]);
+
+  const handleSearch = (searchText: string) => {
+    const lowercasedSearch = searchText.toLowerCase();
+
+    setTimeout(() => {
+      const filtered = games.filter((game) => game.title.toLowerCase().includes(lowercasedSearch));
+      setFilteredGames(filtered);
+      hideSpinner();
+    }, 300);
+  };
 
   return (
     <div className={styles.wrapper}>
-      <SearchBar />
+      <ProductSearchBar onSearch={handleSearch} />
       <section className={styles.container}>
         <h2>Products</h2>
-        <div className={styles.gamesContainer}>
-          {games.map((game) => (
-            <GameCard key={game.id} {...game} platforms={game.platforms} />
-          ))}
-        </div>
+        {loading ? (
+          <wup-spin w-fit w-inline />
+        ) : (
+          <div className={styles.gamesContainer}>
+            {filteredGames.length > 0
+              ? filteredGames.map((game) => <GameCard key={game.id} {...game} platforms={game.platforms} />)
+              : "No games available with the selected filters"}
+          </div>
+        )}
       </section>
     </div>
   );
