@@ -4,7 +4,7 @@ import { getProducts } from "@/api/services/gameService";
 import { sortingParams } from "@/shared/models/sortingParams";
 import useSpinner from "@/helpers/hooks/useSpinner";
 import WUPSpinElement from "web-ui-pack/spinElement";
-import ProductSearchBar from "src/elements/productSearchBar";
+import SearchBar from "@/elements/searchBar/searchBar";
 import { useParams } from "react-router-dom";
 import * as styles from "./productSection.module.scss";
 import GameCard from "../home/card/card";
@@ -45,12 +45,12 @@ function ProductSection({ filters }: { filters: sortingParams }) {
       const filtered = games.filter((game) => game.title.toLowerCase().includes(lowercasedSearch));
       setFilteredGames(filtered);
       hideSpinner();
-    }, 300);
+    }, 500);
   };
 
   return (
     <div className={styles.wrapper}>
-      <ProductSearchBar onSearch={handleSearch} />
+      <SearchBar onSearch={handleSearch} />
       <section className={styles.container}>
         <h2>Products</h2>
         {loading ? (
