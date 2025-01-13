@@ -1,58 +1,60 @@
 import webpackMockServer from "webpack-mock-server";
 import apiEndpoints from "./api.endpoints";
-
-const mockData = {
-  id: 1,
-  username: "wills",
-  firstName: "Will",
-  lastName: "Smith",
-  email: "willsmith321@gmail.com",
-  phoneNumber: "123-456-7890",
-  description: "Test desc",
-  address: "123 Main Street, Springfield, USA",
-  profileImage: "src/assets/icons/resetPassword.svg",
-};
-
-const mockTopGames = [
-  {
-    id: 1,
-    title: "Overwatch",
-    price: "23.99",
-    rating: 5,
-    ageRating: 12,
-    cover: "https://upload.wikimedia.org/wikipedia/en/5/51/Overwatch_cover_art.jpg",
-    platforms: ["pc"],
-    releaseDate: "2024-11-28",
-    description: "Overwatch was a 2016 team-based online multiplayer first-person shooter video game by Blizzard Entertainment...",
-  },
-  {
-    id: 2,
-    title: "Minecraft",
-    price: "25.99",
-    rating: 4.5,
-    ageRating: 3,
-    cover: "https://m.media-amazon.com/images/M/MV5BNjQzMDlkNDctYmE3Yi00ZWFiLTlmOWYtMjI4MzQ4Y2JhZjY2XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
-    platforms: ["pc", "ps5", "xbox"],
-    releaseDate: "2024-11-27",
-    description: "Minecraft is a 2011 sandbox game developed and published by Mojang Studios...",
-  },
-  {
-    id: 3,
-    title: "Terraria",
-    price: "4.99",
-    rating: 4,
-    ageRating: 6,
-    cover: "https://upload.wikimedia.org/wikipedia/en/1/1a/Terraria_Steam_artwork.jpg",
-    platforms: ["pc", "ps5", "xbox"],
-    releaseDate: "2024-11-26",
-    description: "Terraria is a 2011 action-adventure sandbox game developed by Re-Logic...",
-  },
-];
+import { mockData, mockTopGames, mockProducts } from "./mockData";
 
 export default webpackMockServer.add((app) => {
   app.get(apiEndpoints.testMock, (_req, res) => res.json(mockData));
 
   app.get(apiEndpoints.gamesMock, (_req, res) => res.json(mockTopGames));
+
+  app.get(apiEndpoints.getProducts, (req, res) => {
+    const { sortType, sortDir, genre, ageRating, category } = req.query;
+
+    let filteredProducts = [...mockProducts];
+
+    if (category && typeof category === "string") {
+      filteredProducts = filteredProducts.filter((product) => product.platforms.includes(category.toLowerCase()));
+    }
+
+    if (genre && typeof genre === "string") {
+      filteredProducts = filteredProducts.filter((product) => product.genre && product.genre.toLowerCase() === genre.toLowerCase());
+    }
+
+    if (ageRating && typeof ageRating === "string") {
+      filteredProducts = filteredProducts.filter((product) => product.ageRating >= parseInt(ageRating, 10));
+    }
+
+    const validSortFields = ["price", "rating", "title"] as const;
+    type SortField = (typeof validSortFields)[number];
+
+    if (sortType && typeof sortType === "string" && validSortFields.includes(sortType as SortField)) {
+      const sortField = sortType as SortField;
+
+      filteredProducts.sort((a, b) => {
+        const fieldA = sortField === "price" ? parseFloat(a[sortField]) : a[sortField];
+        const fieldB = sortField === "price" ? parseFloat(b[sortField]) : b[sortField];
+
+        if (sortDir === "desc") {
+          if (fieldB > fieldA) {
+            return 1;
+          }
+          if (fieldB < fieldA) {
+            return -1;
+          }
+          return 0;
+        }
+        if (fieldA > fieldB) {
+          return 1;
+        }
+        if (fieldA < fieldB) {
+          return -1;
+        }
+        return 0;
+      });
+    }
+
+    res.json(filteredProducts);
+  });
 
   app.get(apiEndpoints.searchMock, (req, res) => {
     const searchText = typeof req.query.text === "string" ? req.query.text : "";
