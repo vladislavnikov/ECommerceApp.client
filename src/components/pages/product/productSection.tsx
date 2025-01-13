@@ -5,6 +5,7 @@ import { sortingParams } from "@/shared/models/sortingParams";
 import useSpinner from "@/helpers/hooks/useSpinner";
 import WUPSpinElement from "web-ui-pack/spinElement";
 import ProductSearchBar from "src/elements/productSearchBar";
+import { useParams } from "react-router-dom";
 import * as styles from "./productSection.module.scss";
 import GameCard from "../home/card/card";
 
@@ -15,10 +16,13 @@ function ProductSection({ filters }: { filters: sortingParams }) {
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
   const { loading, showSpinner, hideSpinner } = useSpinner();
 
+  const { category } = useParams();
+
   useEffect(() => {
     const loadGames = async () => {
       showSpinner();
-
+      // eslint-disable-next-line no-param-reassign
+      filters.category = category;
       try {
         const data = await getProducts(filters);
 
@@ -32,7 +36,7 @@ function ProductSection({ filters }: { filters: sortingParams }) {
     };
 
     loadGames();
-  }, [filters, showSpinner, hideSpinner]);
+  }, [category, filters, showSpinner, hideSpinner]);
 
   const handleSearch = (searchText: string) => {
     const lowercasedSearch = searchText.toLowerCase();

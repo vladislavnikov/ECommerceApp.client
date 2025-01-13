@@ -1,6 +1,7 @@
 import { sortingParams } from "@/shared/models/sortingParams";
 import { ChangeEvent } from "react";
 import * as styles from "src/components/pages/product/productAside.module.scss";
+import { useParams } from "react-router-dom";
 
 interface ProductAsideProps {
   filters: sortingParams;
@@ -8,6 +9,8 @@ interface ProductAsideProps {
 }
 
 function ProductAside({ filters, setFilters }: ProductAsideProps) {
+  const { category } = useParams();
+
   const handleChange = (e: ChangeEvent<HTMLSelectElement | HTMLInputElement>) => {
     const { name, value } = e.target;
 
@@ -19,7 +22,7 @@ function ProductAside({ filters, setFilters }: ProductAsideProps) {
 
   return (
     <aside className={styles.filterContainer}>
-      <h2>{filters.category || "All Categories"}</h2>
+      <h2>{category}</h2>
 
       <h3>Sort</h3>
       <div className={styles.filterSection}>
