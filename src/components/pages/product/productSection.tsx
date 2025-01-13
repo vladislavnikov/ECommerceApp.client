@@ -3,18 +3,15 @@ import { Game } from "src/shared/models/game";
 import { getProducts } from "@/api/services/gameService";
 import { sortingParams } from "@/shared/models/sortingParams";
 import useSpinner from "@/helpers/hooks/useSpinner";
-import WUPSpinElement from "web-ui-pack/spinElement";
 import SearchBar from "@/elements/searchBar/searchBar";
 import { useParams } from "react-router-dom";
 import * as styles from "./productSection.module.scss";
 import GameCard from "../home/card/card";
 
-WUPSpinElement.$use();
-
 function ProductSection({ filters }: { filters: sortingParams }) {
   const [games, setGames] = useState<Game[]>([]);
   const [filteredGames, setFilteredGames] = useState<Game[]>([]);
-  const { loading, showSpinner, hideSpinner } = useSpinner();
+  const { loading, showSpinner, hideSpinner, spinner } = useSpinner();
 
   const { category } = useParams();
 
@@ -45,7 +42,7 @@ function ProductSection({ filters }: { filters: sortingParams }) {
       const filtered = games.filter((game) => game.title.toLowerCase().includes(lowercasedSearch));
       setFilteredGames(filtered);
       hideSpinner();
-    }, 500);
+    }, 1000);
   };
 
   return (
@@ -54,7 +51,7 @@ function ProductSection({ filters }: { filters: sortingParams }) {
       <section className={styles.container}>
         <h2>Products</h2>
         {loading ? (
-          <wup-spin w-fit w-inline />
+          spinner
         ) : (
           <div className={styles.gamesContainer}>
             {filteredGames.length > 0
