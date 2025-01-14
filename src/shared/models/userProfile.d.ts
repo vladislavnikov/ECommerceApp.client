@@ -1,3 +1,5 @@
+import { CartItem } from "./cartItems";
+
 export interface UserProfile {
   id: number;
   username: string;
@@ -8,4 +10,5 @@ export interface UserProfile {
   phoneNumber: string;
   address: string;
   profileImage: string;
+  cart: CartItem[];
 }

@@ -41,7 +41,7 @@ function Header() {
 
         {currentUser ? (
           <>
-            <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
+            <NavLink to={ROUTES.CART} className={({ isActive }) => (isActive ? styles.active : "")}>
               <img src={shoppingCard} alt="Shopping Cart" />
             </NavLink>
             <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>

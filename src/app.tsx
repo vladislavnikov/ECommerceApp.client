@@ -6,6 +6,7 @@ import Products from "./components/pages/product/product";
 import About from "./components/pages/about";
 import Profile from "./components/pages/profile/profile";
 import ProtectedRoute from "./routes/protectedRoute";
+import Cart from "./components/pages/cart/cart";
 
 function App() {
   return (
@@ -43,6 +44,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <ProtectedRoute>
+                <Cart />
               </ProtectedRoute>
             }
           />

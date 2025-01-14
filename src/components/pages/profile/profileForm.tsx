@@ -46,6 +46,7 @@ function ProfileModal() {
     phoneNumber: "",
     address: "",
     profileImage: "",
+    cart: [],
   });
 
   const fetchUserProfile = async () => {
@@ -115,6 +116,7 @@ function ProfileModal() {
         phoneNumber,
         address: defaultAddressDelivery,
         profileImage: uploadedImageUrl || userData.profileImage,
+        cart: userData.cart,
       };
 
       await saveUserChanges(updatedUser);
