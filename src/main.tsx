@@ -4,6 +4,7 @@ import { Component } from "react";
 import ErrorBoundary from "src/elements/errorBoundary";
 import { Provider } from "react-redux";
 import store from "src/redux/store/store";
+import { CartProvider } from "src/elements/cartContext";
 import apiEndpoints from "./api.endpoints";
 import App from "./app";
 
@@ -22,7 +23,9 @@ class AppContainer extends Component {
       // <StrictMode>
       <ErrorBoundary fallback={<h1>Something went wrong! Please try again later.</h1>}>
         <Provider store={store}>
-          <App />
+          <CartProvider>
+            <App />
+          </CartProvider>
         </Provider>
       </ErrorBoundary>
       // <StrictMode />

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import { CartItem } from "@/shared/models/cartItems";
+import { useCart } from "src/elements/cartContext";
 import CartTable from "./cartTable";
 import * as styles from "./cart.module.scss";
 import DialogSection from "./dialog";
@@ -11,7 +12,7 @@ function Cart() {
   const [selectedItems, setSelectedItems] = useState<number[]>([]);
   const [totalCost, setTotalCost] = useState(0);
   const [openDialog, setOpenDialog] = useState(false);
-
+  const { updateItemsCount } = useCart();
   const navigate = useNavigate();
 
   function calculateTotalCost(items: CartItem[]) {
@@ -73,6 +74,7 @@ function Cart() {
     setSelectedItems([]);
     localStorage.setItem("cart", JSON.stringify(updatedCart));
     calculateTotalCost(updatedCart);
+    updateItemsCount();
   };
 
   const toggleSelection = (id: number) => {
@@ -89,6 +91,7 @@ function Cart() {
       setTotalCost(0);
       alert("Thank you for your purchase!");
       navigate("/");
+      updateItemsCount();
     } else {
       alert("Nothing to purchase!");
     }

@@ -97,4 +97,9 @@
     height: 25px;
     scale: calc(60%);
   }
+
+  .cartIcon {
+    display: flex;
+    flex-direction: row;
+  }
 }

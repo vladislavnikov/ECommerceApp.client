@@ -4,12 +4,13 @@ import * as styles from "src/components/pages/home/card/card.m.scss";
 import { CartItem } from "@/shared/models/cartItems";
 import { useParams } from "react-router-dom";
 import { Rating } from "@mui/material";
+import { useCart } from "src/elements/cartContext";
 
 interface GameCardProps extends Game {}
 
 function GameCard({ title, price, rating, ageRating, cover, platforms, description, id }: GameCardProps) {
   const { category } = useParams();
-
+  const { updateItemsCount } = useCart();
   const platformToUse = category || "PC";
 
   if (!platformToUse) {
@@ -38,6 +39,7 @@ function GameCard({ title, price, rating, ageRating, cover, platforms, descripti
       });
     }
     localStorage.setItem("cart", JSON.stringify(cart));
+    updateItemsCount();
   };
 
   return (

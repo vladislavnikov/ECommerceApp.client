@@ -9,6 +9,7 @@ import userIcon from "src/assets/icons/user.png";
 import shoppingCard from "src/assets/icons/shoppingCart.png";
 import { RootState } from "src/redux/store/store";
 import { UserAction } from "src/redux/slices/userSlice";
+import { useCart } from "src/elements/cartContext";
 import SignInModal from "./modals/signInModal";
 import SignUpModal from "./modals/signUpModal";
 
@@ -17,6 +18,7 @@ function Header() {
   const [isSignUpOpen, setSignUpOpen] = useState(false);
 
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const { itemsCount } = useCart();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -42,7 +44,10 @@ function Header() {
         {currentUser ? (
           <>
             <NavLink to={ROUTES.CART} className={({ isActive }) => (isActive ? styles.active : "")}>
-              <img src={shoppingCard} alt="Shopping Cart" />
+              <div className={styles.cartIcon}>
+                <img src={shoppingCard} alt="Shopping Cart" />
+                {itemsCount > 0 ? <span>{itemsCount}</span> : null}
+              </div>
             </NavLink>
             <NavLink to={ROUTES.PROFILE} className={({ isActive }) => (isActive ? styles.active : "")}>
               <span className={styles.user}>
