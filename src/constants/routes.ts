@@ -5,6 +5,7 @@ export const ROUTES = {
   CART: "/cart",
   NOT_FOUND: "/404",
   PROFILE: "/profile",
+  PRODUCT_CATEGORY: "/products/category/:category",
 
   CATEGORIES: {
     PC: "/products/category/pc",

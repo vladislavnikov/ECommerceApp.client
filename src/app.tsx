@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { ROUTES } from "src/constants/routes";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./components/pages/home/home";
@@ -16,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
-            path="/products"
+            path={ROUTES.PRODUCTS}
             element={
               <ProtectedRoute>
                 <Products />
@@ -24,7 +25,7 @@ function App() {
             }
           />
           <Route
-            path="/products/category/:category"
+            path={ROUTES.PRODUCT_CATEGORY}
             element={
               <ProtectedRoute>
                 <Products />
@@ -32,7 +33,7 @@ function App() {
             }
           />
           <Route
-            path="/about"
+            path={ROUTES.ABOUT}
             element={
               <ProtectedRoute>
                 <About />
@@ -40,7 +41,7 @@ function App() {
             }
           />
           <Route
-            path="/profile"
+            path={ROUTES.PROFILE}
             element={
               <ProtectedRoute>
                 <Profile />
@@ -48,7 +49,7 @@ function App() {
             }
           />
           <Route
-            path="/cart"
+            path={ROUTES.CART}
             element={
               <ProtectedRoute>
                 <Cart />

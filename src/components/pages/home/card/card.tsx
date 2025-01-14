@@ -18,6 +18,7 @@ function GameCard({ title, price, rating, ageRating, cover, platforms, descripti
   }
 
   const handleAddToCart = (product: CartItem) => {
+    alert("Added to the shopping cart!");
     const existingCart = localStorage.getItem("cart");
     const cart = existingCart ? JSON.parse(existingCart) : [];
     const existingItem = cart.find((item: CartItem) => item.id === product.id);

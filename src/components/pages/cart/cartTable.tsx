@@ -65,11 +65,7 @@ function CartTable({
         ))}
         {cartItems.length > 0 && (
           <tr>
-            <td />
-            <td />
-            <td />
-            <td />
-            <td />
+            <td colSpan={5} />
             <td>
               <Button variant="contained" color="secondary" onClick={onRemoveSelectedItems} className={styles.removeBtn}>
                 Remove

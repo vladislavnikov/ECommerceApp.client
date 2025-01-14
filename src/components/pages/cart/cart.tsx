@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
 import { CartItem } from "@/shared/models/cartItems";
 import CartTable from "./cartTable";
 import * as styles from "./cart.module.scss";
+import DialogSection from "./dialog";
 
 function Cart() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
@@ -117,20 +113,7 @@ function Cart() {
         </Button>
       </div>
 
-      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
-        <DialogTitle>Confirm Purchase</DialogTitle>
-        <DialogContent>
-          <DialogContentText>Do you want to complete the purchase?</DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setOpenDialog(false)} color="secondary">
-            Cancel
-          </Button>
-          <Button onClick={handleBuy} color="primary">
-            Confirm
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <DialogSection open={openDialog} onClose={() => setOpenDialog(false)} onConfirm={handleBuy} />
     </div>
   );
 }
