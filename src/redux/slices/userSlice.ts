@@ -42,6 +42,7 @@ export const handleSignIn = createAsyncThunk("user/signIn", async ({ username, p
       phoneNumber: "",
       address: "",
       profileImage: "",
+      cart: [],
     };
 
     localStorage.setItem("currentUser", JSON.stringify(userProfile));
@@ -66,6 +67,7 @@ export const handleSignUp = createAsyncThunk("user/signUp", async ({ username, p
       phoneNumber: "",
       address: "",
       profileImage: "",
+      cart: [],
     };
 
     localStorage.setItem("currentUser", JSON.stringify(userProfile));

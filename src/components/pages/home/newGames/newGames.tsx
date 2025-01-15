@@ -15,8 +15,8 @@ function NewGames() {
         const data = await fetchTopGames();
 
         const sortedGames = data.sort((a: Game, b: Game) => {
-          const dateA = new Date(a.releaseDate).getTime();
-          const dateB = new Date(b.releaseDate).getTime();
+          const dateA = a.releaseDate ? new Date(a.releaseDate).getTime() : new Date(0).getTime();
+          const dateB = b.releaseDate ? new Date(b.releaseDate).getTime() : new Date(0).getTime();
           return dateB - dateA;
         });
 

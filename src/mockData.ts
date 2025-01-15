@@ -8,6 +8,7 @@ export const mockData = {
   description: "Test desc",
   address: "123 Main Street, Springfield, USA",
   profileImage: "src/assets/icons/resetPassword.svg",
+  cart: [],
 };
 
 export const mockTopGames = [

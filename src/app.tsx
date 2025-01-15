@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { ROUTES } from "src/constants/routes";
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import Home from "./components/pages/home/home";
@@ -6,6 +7,7 @@ import Products from "./components/pages/product/product";
 import About from "./components/pages/about";
 import Profile from "./components/pages/profile/profile";
 import ProtectedRoute from "./routes/protectedRoute";
+import Cart from "./components/pages/cart/cart";
 
 function App() {
   return (
@@ -15,7 +17,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
-            path="/products"
+            path={ROUTES.PRODUCTS}
             element={
               <ProtectedRoute>
                 <Products />
@@ -23,7 +25,7 @@ function App() {
             }
           />
           <Route
-            path="/products/category/:category"
+            path={ROUTES.PRODUCT_CATEGORY}
             element={
               <ProtectedRoute>
                 <Products />
@@ -31,7 +33,7 @@ function App() {
             }
           />
           <Route
-            path="/about"
+            path={ROUTES.ABOUT}
             element={
               <ProtectedRoute>
                 <About />
@@ -39,10 +41,18 @@ function App() {
             }
           />
           <Route
-            path="/profile"
+            path={ROUTES.PROFILE}
             element={
               <ProtectedRoute>
                 <Profile />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path={ROUTES.CART}
+            element={
+              <ProtectedRoute>
+                <Cart />
               </ProtectedRoute>
             }
           />
